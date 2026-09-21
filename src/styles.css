@@ -76,6 +76,20 @@ nav a:hover {
   font-size: 16px;
   margin-left: 8px;
 }
+.menu-toggle {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: none;
+  padding: 8px;
+}
+.menu-toggle span {
+  background: var(--ink);
+  display: block;
+  height: 2px;
+  margin: 5px 0;
+  width: 24px;
+}
 .hero {
   background: linear-gradient(135deg, #f7fcfd 0%, var(--aqua) 100%);
   display: grid;
@@ -541,6 +555,25 @@ footer small {
   nav {
     display: none;
   }
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+  }
+  nav.is-open {
+    background: white;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    gap: 0;
+    left: 0;
+    padding: 8px 8vw 16px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+  }
+  nav.is-open a {
+    border-bottom: 1px solid var(--line);
+    padding: 15px 0;
+  }
   .language-switch {
     margin-left: auto;
   }
@@ -646,5 +679,22 @@ footer small {
   footer small {
     display: block;
     margin-top: 25px;
+  }
+}
+@media (max-width: 420px) {
+  .stats {
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  .stats div,
+  .stats div:first-child {
+    border-left: 0;
+    border-top: 1px solid rgba(237, 247, 244, 0.3);
+    padding-left: 0;
+    padding-top: 14px;
+  }
+  .stats div:first-child {
+    border-top: 0;
+    padding-top: 0;
   }
 }

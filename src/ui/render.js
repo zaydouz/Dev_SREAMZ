@@ -33,7 +33,8 @@ export function renderApp(root, content, language) {
   root.innerHTML = `
     <header class="site-header">
       <a class="brand" href="#home" aria-label="STREAMZ home"><img src="${logoUrl}" alt="STREAMZ"></a>
-      <nav aria-label="Main navigation">${navigationMarkup(content.navigation)}</nav>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <nav id="main-navigation" aria-label="Main navigation">${navigationMarkup(content.navigation)}</nav>
       <button class="language-switch" type="button" aria-label="Change language">${content.languageName}<span aria-hidden="true">↗</span></button>
     </header>
     <main>
@@ -50,4 +51,20 @@ export function renderApp(root, content, language) {
 
   document.documentElement.lang = language;
   document.title = `STREAMZ | ${content.documentTitle}`;
+
+  const menuToggle = root.querySelector(".menu-toggle");
+  const navigationElement = root.querySelector("#main-navigation");
+  menuToggle.addEventListener("click", () => {
+    const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+    menuToggle.setAttribute("aria-expanded", String(!isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Open menu" : "Close menu");
+    navigationElement.classList.toggle("is-open", !isOpen);
+  });
+  navigationElement.addEventListener("click", (event) => {
+    if (event.target instanceof HTMLAnchorElement) {
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open menu");
+      navigationElement.classList.remove("is-open");
+    }
+  });
 }
