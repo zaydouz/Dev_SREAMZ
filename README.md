@@ -13,11 +13,15 @@ Le build de production est genere avec `npm run build`.
 
 ## Organisation
 
-- `src/main.js` contient le rendu de la page et les traductions centralisees.
+- `src/main.js` demarre l'application et gere uniquement l'etat de langue.
+- `src/data/content.js` contient les traductions, les produits, les services et les prix de demonstration.
+- `src/ui/render.js` contient le rendu HTML et ne contient pas de contenu metier.
 - `src/styles.css` contient le design responsive.
 - `logo.png` est importe comme asset Vite.
 
-Pour ajouter une fonctionnalite, garder les donnees metier dans des modules separes de l'affichage. Quand le catalogue deviendra achetable, remplacer le tableau `menu` par une API et conserver les prix cote serveur.
+Pour ajouter une fonctionnalite, ajouter d'abord ses donnees dans `src/data/content.js`, puis son rendu dans `src/ui/render.js`. Quand le catalogue deviendra achetable, remplacer le tableau `menu.items` par une API et conserver les prix cote serveur.
+
+Le code peut etre reformate avec `npm run format`.
 
 ## Backend et securite
 
