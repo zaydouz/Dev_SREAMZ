@@ -8,12 +8,14 @@ const navigationMarkup = (labels) =>
     .join("");
 
 export function renderApp(root, content, language) {
+  document.body.classList.remove("menu-modal-open");
   const productMarkup = products
     .map(
-      ({ number, tone, title, description, meta }) => `
-    <article class="product product-${tone}">
+      ({ number, tone, title, description, meta, menuKey, image }) => `
+    <article class="product product-${tone}${menuKey ? " product-link" : ""}"${menuKey ? ` data-menu-key="${menuKey}" tabindex="0" role="button" aria-label="${content.products[title]}"` : ""}>
       <span class="product-number">${number}</span>
-      <div><h3>${content.products[title]}</h3><p>${content.products[description]}</p></div>
+      <div class="product-image">${image ? `<img src="${image}" alt="${content.products[title]}" />` : '<span class="product-placeholder" aria-hidden="true">S</span>'}</div>
+      <div class="product-copy"><h3>${content.products[title]}</h3><p>${content.products[description]}</p></div>
       <strong>${content.products[meta]}</strong>
     </article>`,
     )
@@ -24,10 +26,40 @@ export function renderApp(root, content, language) {
         `<article class="service"><span class="service-icon" aria-hidden="true">${icon}</span><h3>${content.services[title]}</h3><p>${content.services[description]}</p></article>`,
     )
     .join("");
-  const menuMarkup = content.menu.items
+  const menuMarkup = content.menu.sections
     .map(
-      ([name, price]) =>
-        `<div><span>${name}</span><strong>${price}</strong></div>`,
+      ({ key, title, items, details }) => `
+        <article class="menu-category" data-menu-category="${key}">
+          <h3>${title}</h3>
+          ${
+            items.length
+              ? `<div class="menu-list">${items
+                  .map(
+                    ([name, price, image]) =>
+                      `<div class="menu-item"><div class="menu-item-image">${image ? `<img src="${image}" alt="${name}" />` : '<span aria-hidden="true">S</span>'}</div><span>${name}</span><strong>${price}</strong></div>`,
+                  )
+                  .join("")}</div>`
+              : details
+                ? `<div class="dispenser-details">
+                    <div class="dispenser-details-image"><img src="${details.image}" alt="${title}" /></div>
+                    <dl>
+                      ${Object.entries(details)
+                        .filter(
+                          ([detailKey]) =>
+                            !["features", "image"].includes(detailKey),
+                        )
+                        .map(
+                          ([detailKey, value]) =>
+                            `<div><dt>${{ category: language === "fr" ? "Catégorie" : "Category", brand: "Brand", heating: language === "fr" ? "Chauffage" : "Heating", cooling: language === "fr" ? "Refroidissement" : "Cooling", refrigerant: language === "fr" ? "Réfrigérant" : "Refrigerant", voltage: language === "fr" ? "Tension" : "Voltage", dimensions: language === "fr" ? "Dimensions" : "Dimensions" }[detailKey]}</dt><dd>${value}</dd></div>`,
+                        )
+                        .join("")}
+                    </dl>
+                    <h4>${language === "fr" ? "Caractéristiques" : "Features"}</h4>
+                    <ul>${details.features.map((feature) => `<li>${feature}</li>`).join("")}</ul>
+                  </div>`
+                : `<p class="menu-empty">${content.menu.empty}</p>`
+          }
+        </article>`,
     )
     .join("");
 
@@ -39,16 +71,25 @@ export function renderApp(root, content, language) {
       <button class="language-switch" type="button" aria-label="Change language">${content.languageName}<span aria-hidden="true">↗</span></button>
     </header>
     <main>
-      <section class="hero" id="home" aria-labelledby="hero-title"><div class="hero-copy"><p class="eyebrow">${content.hero.eyebrow}</p><h1 id="hero-title">${content.hero.title}</h1><p class="hero-text">${content.hero.description}</p><a class="button button-light" href="#products">${content.hero.cta}<span aria-hidden="true">↗</span></a></div><div class="hero-art" role="img" aria-label="${content.hero.alt}"><div class="sun-ring"></div><div class="bottle-shape"><span>STREAMZ</span></div><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div></div></section>
+      <section class="hero" id="home" aria-labelledby="hero-title"><div class="hero-copy"><p class="eyebrow">${content.hero.eyebrow}</p><h1 id="hero-title">${content.hero.title}</h1><p class="hero-text">${content.hero.description}</p><a class="button button-light" href="#products">${content.hero.cta}<span aria-hidden="true">↗</span></a></div><div class="hero-art" role="img" aria-label="${content.hero.alt}"><img class="hero-product-image" src="/images/page_de_garde.png" alt="${content.hero.alt}" /></div></section>
       <section class="stats" aria-label="STREAMZ facts">${content.stats.map(([value, label]) => `<div><strong>${value}</strong><span>${label}</span></div>`).join("")}</section>
       <section class="mission section-pad"><div class="section-intro"><p class="eyebrow">${content.mission.eyebrow}</p><h2>${content.mission.title}</h2><p>${content.mission.description}</p></div><div class="principles">${content.principles.map(([number, title, text]) => `<article><span>${number}</span><h3>${title}</h3><p>${text}</p></article>`).join("")}</div></section>
       <section class="story section-pad" id="story"><div class="story-image"><div class="water-mark" aria-hidden="true">S</div><div class="image-caption">WATER STREET NRG<br><small>EST. 2023 · SOUTH AFRICA</small></div></div><div class="story-copy"><p class="eyebrow">${content.story.eyebrow}</p><h2>${content.story.title}</h2><p>${content.story.description}</p><a class="text-link" href="#contact">${content.story.cta} <span aria-hidden="true">↗</span></a></div></section>
       <section class="range section-pad" id="products"><div class="section-heading"><div><p class="eyebrow">${content.productSection.eyebrow}</p><h2>${content.productSection.title}</h2></div></div><div class="product-grid">${productMarkup}</div></section>
-      <section class="menu-section section-pad"><div class="menu-heading"><p class="eyebrow">${content.menu.eyebrow}</p><h2>${content.menu.title}</h2><p>${content.menu.note}</p></div><div class="menu-list">${menuMarkup}</div></section>
       <section class="services section-pad" id="services"><div class="section-heading"><div><p class="eyebrow">${content.serviceSection.eyebrow}</p><h2>${content.serviceSection.title}</h2></div></div><div class="service-grid">${serviceMarkup}</div></section>
       <section class="contact" id="contact"><div><p class="eyebrow">${content.contact.eyebrow}</p><h2>${content.contact.title}</h2><p>${content.contact.description}</p></div><a class="button button-dark" href="mailto:${content.contact.email}">${content.contact.cta}<span aria-hidden="true">↗</span></a></section>
     </main>
-    <footer><div><img src="${logoUrl}" alt="STREAMZ"><p>${content.footer.tagline}</p></div><a href="mailto:${content.contact.email}">${content.contact.email}</a><small>© 2026 Water Street NRG. ${content.footer.rights}</small></footer>`);
+    <footer><div><img src="${logoUrl}" alt="STREAMZ"><p>${content.footer.tagline}</p></div><a href="mailto:${content.contact.email}">${content.contact.email}</a><small>© 2026 Water Street NRG. ${content.footer.rights}</small></footer>
+    <div class="menu-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="menu-modal-title">
+      <div class="menu-modal-backdrop" data-close-menu></div>
+      <div class="menu-modal-content">
+        <button class="menu-modal-close" type="button" aria-label="${language === "fr" ? "Fermer" : "Close"}" data-close-menu>&times;</button>
+        <p class="eyebrow">${content.menu.eyebrow}</p>
+        <h2 id="menu-modal-title">${content.menu.title}</h2>
+        <p class="menu-modal-note">${content.menu.note}</p>
+        <div class="menu-categories">${menuMarkup}</div>
+      </div>
+    </div>`);
 
   document.documentElement.lang = language;
   document.title = `STREAMZ | ${content.documentTitle}`;
@@ -67,5 +108,65 @@ export function renderApp(root, content, language) {
       menuToggle.setAttribute("aria-label", "Open menu");
       navigationElement.classList.remove("is-open");
     }
+  });
+
+  const menuModal = root.querySelector(".menu-modal");
+  const closeMenuModal = () => {
+    menuModal.classList.remove("is-open");
+    menuModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("menu-modal-open");
+  };
+  const openMenuModal = (menuKey) => {
+    menuModal.querySelectorAll(".menu-category").forEach((category) => {
+      category.hidden = category.dataset.menuCategory !== menuKey;
+    });
+    menuModal.classList.add("is-open");
+    menuModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("menu-modal-open");
+    menuModal.querySelector(".menu-modal-close").focus();
+  };
+
+  root.querySelectorAll(".product-link").forEach((product) => {
+    const open = () => openMenuModal(product.dataset.menuKey);
+    product.addEventListener("click", open);
+    product.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open();
+      }
+    });
+  });
+  menuModal.addEventListener("click", (event) => {
+    if (
+      event.target instanceof Element &&
+      event.target.hasAttribute("data-close-menu")
+    ) {
+      closeMenuModal();
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuModal.classList.contains("is-open")) {
+      closeMenuModal();
+    }
+  });
+
+  root.querySelectorAll(".product-image img").forEach((image) => {
+    image.addEventListener(
+      "error",
+      () => {
+        image.parentElement.innerHTML =
+          '<span class="product-placeholder" aria-hidden="true">S</span>';
+      },
+      { once: true },
+    );
+  });
+  root.querySelectorAll(".menu-item-image img").forEach((image) => {
+    image.addEventListener(
+      "error",
+      () => {
+        image.parentElement.innerHTML = '<span aria-hidden="true">S</span>';
+      },
+      { once: true },
+    );
   });
 }

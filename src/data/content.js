@@ -7,16 +7,51 @@ export const navigation = [
 ];
 
 export const products = [
-  { number: "01", tone: "1", title: "purifiedWater", description: "purifiedWaterDescription", meta: "purifiedWaterMeta" },
-  { number: "02", tone: "2", title: "dispensers",    description: "dispensersDescription",    meta: "dispensersMeta" },
-  { number: "03", tone: "3", title: "juice",          description: "juiceDescription",          meta: "juiceMeta" },
-  { number: "04", tone: "4", title: "filtration",     description: "filtrationDescription",     meta: "filtrationMeta" },
+  {
+    number: "01",
+    tone: "1",
+    title: "purifiedWater",
+    description: "purifiedWaterDescription",
+    meta: "purifiedWaterMeta",
+    menuKey: "water",
+    image: "",
+  },
+  {
+    number: "02",
+    tone: "2",
+    title: "dispensers",
+    description: "dispensersDescription",
+    meta: "dispensersMeta",
+    menuKey: "dispensers",
+    image: "",
+  },
+  {
+    number: "03",
+    tone: "3",
+    title: "juice",
+    description: "juiceDescription",
+    meta: "juiceMeta",
+    menuKey: "juice",
+    image: "",
+  },
+  {
+    number: "04",
+    tone: "4",
+    title: "filtration",
+    description: "filtrationDescription",
+    meta: "filtrationMeta",
+    image: "",
+  },
 ];
 
 export const services = [
-  { icon: "▱", title: "packaging",     description: "packagingDescription" },
-  { icon: "◒", title: "delivery",      description: "deliveryDescription" },
-  { icon: "✦", title: "customBottles", description: "customBottlesDescription" },
+  { icon: "▱", title: "packaging", description: "packagingDescription" },
+  { icon: "◒", title: "delivery", description: "deliveryDescription" },
+  {
+    icon: "✦",
+    title: "customBottles",
+    description: "customBottlesDescription",
+  },
 ];
 
 const shared = {
@@ -104,17 +139,55 @@ export const translations = {
       eyebrow: "Tarifs",
       title: "Le menu STREAMZ",
       note: "Prix en rands sud-africains (ZAR). Contactez-nous pour les disponibilités et la livraison.",
-      items: [
-        ["Eau 500 ml", "R6.00"],
-        ["Eau 500 ml — pack de 6", "R33.00"],
-        ["Eau 500 ml — pack de 12", "R66.00"],
-        ["Eau 1,5 L", "R12.00"],
-        ["Bouteille vide 5 L", "R20.00"],
-        ["Bouteille vide 10 L", "R38.00"],
-        ["Bidon 18,9 L", "R121.00"],
-        ["Bidon avec poignées 10 L", "R99.00"],
-        ["Bidon carré avec robinet 25 L", "R275.00"],
-        ["Robinet", "R35.00"],
+      empty: "Les tarifs de cette catégorie seront bientôt disponibles.",
+      sections: [
+        {
+          key: "water",
+          title: "Eau potable",
+          items: [
+            ["Eau 500 ml", "R6.00", "/images/500ml_water.png"],
+            ["Eau 500 ml — pack de 6", "R33.00", ""],
+            ["Eau 500 ml — pack de 12", "R66.00", ""],
+            ["Eau 1,5 L", "R12.00", "/images/1500ml_water.png"],
+            ["Bouteille vide 5 L", "R20.00", ""],
+            ["Bouteille vide 10 L", "R38.00", ""],
+            ["Bidon 18,9 L", "R121.00", ""],
+            ["Bidon avec poignées 10 L", "R99.00", ""],
+            ["Bidon carré avec robinet 25 L", "R275.00", ""],
+            ["Robinet", "R35.00", ""],
+          ],
+        },
+        {
+          key: "juice",
+          title: "Jus",
+          items: [
+            ["Jus d’orange", "Prix sur demande", "/images/orange_juice.png"],
+            ["Jus de mangue", "Prix sur demande", "/images/mango_juice.png"],
+          ],
+        },
+        {
+          key: "dispensers",
+          title:
+            "Distributeur sur pied Executive, eau chaude et froide, sans contact",
+          items: [],
+          details: {
+            image: "/images/Executive Hot and Cold Floorstanding.png",
+            category: "Refroidisseurs / Distributeurs d’eau",
+            brand: "Classic / Water Street NRG",
+            heating: "85-95 °C, 500 W",
+            cooling: "5-10 °C, 90 W",
+            refrigerant: "R134a",
+            voltage: "220-240 V",
+            dimensions: "L 34 cm ; l 33 cm ; H 98 cm",
+            features: [
+              "Compresseur de refroidissement",
+              "Réservoirs chaud et froid en acier inoxydable de qualité alimentaire",
+              "Compresseur silencieux, haute performance et longue durée de vie",
+              "Installation et entretien faciles",
+              "Pièces en plastique ABS antibactérien",
+            ],
+          },
+        },
       ],
     },
     serviceSection: { eyebrow: "Autres services", title: "Nos services" },
@@ -145,7 +218,13 @@ export const translations = {
     ...shared,
     languageName: "Français",
     documentTitle: "Your Trusted Source for Pure, Refreshing Water",
-    navigation: { home: "Home", story: "Our story", products: "Products", services: "Services", contact: "Contact" },
+    navigation: {
+      home: "Home",
+      story: "Our story",
+      products: "Products",
+      services: "Services",
+      contact: "Contact",
+    },
     hero: {
       eyebrow: "Water for life and living",
       title: "Your Trusted Source for Pure, Refreshing Water",
@@ -154,7 +233,11 @@ export const translations = {
       cta: "Explore our range",
       alt: "Illustration of a STREAMZ water bottle",
     },
-    stats: [["2023", "Established"], ["SANS 241", "Quality standard"], ["3", "Core principles"]],
+    stats: [
+      ["2023", "Established"],
+      ["SANS 241", "Quality standard"],
+      ["3", "Core principles"],
+    ],
     mission: {
       eyebrow: "Water Street NRG",
       title: "Our Commitment",
@@ -162,9 +245,21 @@ export const translations = {
         "At Water Street NRG, we understand the significance of water as a fundamental element of life. With this understanding, we have meticulously designed our business to cater to the diverse needs of our customers. Our commitment is built on three core principles:",
     },
     principles: [
-      ["01", "Quality Assurance", "We adhere to the highest standards of water purification and treatment to ensure that every drop we provide is of the utmost quality and purity. Our state-of-the-art facility and rigorous quality control processes guarantee that you receive nothing but the best. Our water quality is checked by accredited laboratories against SANS 241 requirements."],
-      ["02", "Customer Satisfaction", "Your satisfaction is at the heart of our operations. We go the extra mile to listen to your needs and deliver personalized solutions that exceed your expectations. Our friendly and knowledgeable team is always ready to assist you."],
-      ["03", "Community Impact", "We believe in giving back to the communities we serve. Our sustainable practices and environmental consciousness reflect our commitment to preserving our planet’s most precious resource — water."],
+      [
+        "01",
+        "Quality Assurance",
+        "We adhere to the highest standards of water purification and treatment to ensure that every drop we provide is of the utmost quality and purity. Our state-of-the-art facility and rigorous quality control processes guarantee that you receive nothing but the best. Our water quality is checked by accredited laboratories against SANS 241 requirements.",
+      ],
+      [
+        "02",
+        "Customer Satisfaction",
+        "Your satisfaction is at the heart of our operations. We go the extra mile to listen to your needs and deliver personalized solutions that exceed your expectations. Our friendly and knowledgeable team is always ready to assist you.",
+      ],
+      [
+        "03",
+        "Community Impact",
+        "We believe in giving back to the communities we serve. Our sustainable practices and environmental consciousness reflect our commitment to preserving our planet’s most precious resource — water.",
+      ],
     ],
     story: {
       eyebrow: "Our journey",
@@ -173,36 +268,80 @@ export const translations = {
         "Established in 2023, our journey began with a simple yet powerful vision: to make high-quality drinking water accessible to everyone. Over the years, we want our company to stand as a symbol of purity and reliability.",
       cta: "Join our journey",
     },
-    productSection: { eyebrow: "Our offering", title: "Our Range of Products and Services" },
+    productSection: {
+      eyebrow: "Our offering",
+      title: "Our Range of Products and Services",
+    },
     products: {
       purifiedWater: "Purified Drinking Water",
-      purifiedWaterDescription: "Our flagship product is crystal-clear purified water, available in various sizes to meet your daily hydration needs.",
+      purifiedWaterDescription:
+        "Our flagship product is crystal-clear purified water, available in various sizes to meet your daily hydration needs.",
       purifiedWaterMeta: "Various sizes",
       dispensers: "Water Dispensers",
-      dispensersDescription: "We offer a range of water dispensers designed for homes, offices, and businesses, ensuring easy access to refreshing water at any time.",
+      dispensersDescription:
+        "We offer a range of water dispensers designed for homes, offices, and businesses, ensuring easy access to refreshing water at any time.",
       dispensersMeta: "Homes & offices",
       juice: "Juice range",
-      juiceDescription: "Our STREAMZ juice range made of purified water available in various pack sizes (from 250 ml to 5 L).",
+      juiceDescription:
+        "Our STREAMZ juice range made of purified water available in various pack sizes (from 250 ml to 5 L).",
       juiceMeta: "From 250 ml to 5 L",
       filtration: "Water Filtration Systems",
-      filtrationDescription: "For those seeking comprehensive water treatment solutions, we provide advanced filtration systems that guarantee pure, safe water at your fingertips. We will also avail our network of reliable service providers upon request for borehole requirements and industrial projects.",
+      filtrationDescription:
+        "For those seeking comprehensive water treatment solutions, we provide advanced filtration systems that guarantee pure, safe water at your fingertips. We will also avail our network of reliable service providers upon request for borehole requirements and industrial projects.",
       filtrationMeta: "On request",
     },
     menu: {
       eyebrow: "Pricing",
       title: "The STREAMZ Menu",
       note: "Prices in South African rand (ZAR). Contact us for availability and delivery.",
-      items: [
-        ["Water 500 ml", "R6.00"],
-        ["Water 500 ml 6 pack", "R33.00"],
-        ["Water 500 ml 12 pack", "R66.00"],
-        ["Water 1.5 L", "R12.00"],
-        ["Bottle 5 L clear", "R20.00"],
-        ["Bottle 10 L clear", "R38.00"],
-        ["Water container 18.9 L", "R121.00"],
-        ["Water container 10 L with handles", "R99.00"],
-        ["Container 25 L square with tap", "R275.00"],
-        ["Tap for container", "R35.00"],
+      empty: "Pricing for this category will be available soon.",
+      sections: [
+        {
+          key: "water",
+          title: "Drinking water",
+          items: [
+            ["Water 500 ml", "R6.00", "/images/500ml_water.png"],
+            ["Water 500 ml 6 pack", "R33.00", ""],
+            ["Water 500 ml 12 pack", "R66.00", ""],
+            ["Water 1.5 L", "R12.00", "/images/1500ml_water.png"],
+            ["Bottle 5 L clear", "R20.00", ""],
+            ["Bottle 10 L clear", "R38.00", ""],
+            ["Water container 18.9 L", "R121.00", ""],
+            ["Water container 10 L with handles", "R99.00", ""],
+            ["Container 25 L square with tap", "R275.00", ""],
+            ["Tap for container", "R35.00", ""],
+          ],
+        },
+        {
+          key: "juice",
+          title: "Juices",
+          items: [
+            ["Orange juice", "Price on request", "/images/orange_juice.png"],
+            ["Mango juice", "Price on request", "/images/mango_juice.png"],
+          ],
+        },
+        {
+          key: "dispensers",
+          title: "Executive Hot and Cold Floorstanding Non-Touch Dispenser",
+          items: [],
+          details: {
+            image: "/images/Executive Hot and Cold Floorstanding.png",
+            category: "Water coolers / Dispensers",
+            brand: "Classic / Water Street NRG",
+            heating: "85-95 °C, 500 W",
+            cooling: "5-10 °C, 90 W",
+            refrigerant: "R134a",
+            voltage: "220-240 V",
+            dimensions: "L 34 cm; W 33 cm; H 98 cm",
+            features: [
+              "Compressor cooling",
+              "Hot and cold tanks in food-grade stainless steel",
+              "Low-noise, high-performance and long-life compressor",
+              "Easy installation and maintenance",
+              "Plastic parts made of antibacterial ABS materials",
+            ],
+          },
+        },
       ],
     },
     serviceSection: { eyebrow: "Our Services", title: "Beyond water" },
@@ -210,9 +349,11 @@ export const translations = {
       packaging: "Packaging materials",
       packagingDescription: "BPA free plastic products.",
       delivery: "Delivery and installation",
-      deliveryDescription: "We have a dedicated department for installation and delivery of our products, please ask us!",
+      deliveryDescription:
+        "We have a dedicated department for installation and delivery of our products, please ask us!",
       customBottles: "Personalized bottles",
-      customBottlesDescription: "We can tailor make products for you to make your celebrations really special (birthdays, weddings, company events etc.).",
+      customBottlesDescription:
+        "We can tailor make products for you to make your celebrations really special (birthdays, weddings, company events etc.).",
     },
     contact: {
       ...shared.contact,
