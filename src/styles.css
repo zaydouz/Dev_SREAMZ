@@ -733,16 +733,24 @@ h3 {
   opacity: 0.78;
 }
 .menu-modal-close {
-  background: transparent;
+  align-items: center;
+  background: var(--sand);
   border: 0;
+  border-radius: 50%;
   color: var(--ink);
   cursor: pointer;
+  display: flex;
   font-size: 32px;
+  height: 42px;
   line-height: 1;
-  padding: 4px 8px;
-  position: absolute;
-  right: 20px;
-  top: 18px;
+  justify-content: center;
+  margin: -42px -10px 0 auto;
+  padding: 4px;
+  position: sticky;
+  right: 0;
+  top: 12px;
+  width: 42px;
+  z-index: 2;
 }
 .menu-modal-close:hover {
   color: var(--coral);
