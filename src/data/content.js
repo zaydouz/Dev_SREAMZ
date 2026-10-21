@@ -1,61 +1,28 @@
+// Textes de l'interface. Le catalogue produits est dans catalog.js et les
+// magasins dans stores.js, communs aux deux langues.
+
 export const navigation = [
-  { key: "home", href: "#home" },
-  { key: "story", href: "#story" },
   { key: "products", href: "#products" },
+  { key: "about", href: "#about" },
   { key: "services", href: "#services" },
+  { key: "stores", href: "#stores" },
   { key: "contact", href: "#contact" },
 ];
 
-export const products = [
-  {
-    number: "01",
-    tone: "1",
-    title: "purifiedWater",
-    description: "purifiedWaterDescription",
-    meta: "purifiedWaterMeta",
-    menuKey: "water",
-    image: "",
-  },
-  {
-    number: "02",
-    tone: "2",
-    title: "dispensers",
-    description: "dispensersDescription",
-    meta: "dispensersMeta",
-    menuKey: "dispensers",
-    image: "",
-  },
-  {
-    number: "03",
-    tone: "3",
-    title: "juice",
-    description: "juiceDescription",
-    meta: "juiceMeta",
-    menuKey: "juice",
-    image: "",
-  },
-  {
-    number: "04",
-    tone: "4",
-    title: "filtration",
-    description: "filtrationDescription",
-    meta: "filtrationMeta",
-    image: "",
-  },
-];
-
 export const services = [
-  { icon: "▱", title: "packaging", description: "packagingDescription" },
-  { icon: "◒", title: "delivery", description: "deliveryDescription" },
-  {
-    icon: "✦",
-    title: "customBottles",
-    description: "customBottlesDescription",
-  },
+  { key: "delivery", href: "#stores" },
+  { key: "refill", href: "#/products/refill" },
+  { key: "customBottles", href: "#contact" },
+  { key: "packaging", href: "#contact" },
 ];
 
 const shared = {
-  contact: { email: "info@waterstreetnrg.co.za" },
+  contact: { email: "info@waterstreetnrg.co.za", phone: "078 123 1829" },
+  company: {
+    name: "Water Street NRG",
+    registration: "2023 / 642357 / 07",
+    vat: "4230314678",
+  },
 };
 
 export const translations = {
@@ -64,153 +31,127 @@ export const translations = {
     languageName: "English",
     documentTitle: "Votre source fiable pour une eau pure et rafraîchissante",
     navigation: {
-      home: "Accueil",
-      story: "Notre histoire",
-      products: "Produits",
+      products: "Nos produits",
+      about: "À propos",
       services: "Services",
+      stores: "Magasins & livraison",
       contact: "Contact",
     },
+    pending: "À confirmer",
     hero: {
-      eyebrow: "L’eau, source de vie",
       title: "Votre source fiable pour une eau pure et rafraîchissante",
       description:
-        "Chez Water Street NRG, nous nous engageons à offrir aux communautés un accès à l’eau propre, pure et rafraîchissante. Notre mission est de fournir des produits et services d’eau de qualité supérieure qui, non seulement étanchent votre soif, mais améliorent également votre bien-être général.",
-      cta: "Voir notre gamme",
-      alt: "Illustration d’une bouteille d’eau STREAMZ",
+        "Chez Water Street NRG, nous offrons aux communautés un accès à une eau propre, pure et rafraîchissante, ainsi que des produits et services de qualité supérieure.",
+      cta: "Découvrir nos produits",
+      secondary: "Trouver un magasin",
+      alt: "Bouteille d’eau STREAMZ dans une éclaboussure d’eau",
     },
     stats: [
       ["2023", "Fondée en"],
       ["SANS 241", "Norme qualité"],
-      ["3", "Principes d’engagement"],
+      ["Sans BPA", "Emballages"],
     ],
-    mission: {
-      eyebrow: "Water Street NRG",
-      title: "Notre engagement",
+    refillBanner: {
+      eyebrow: "STREAMZ REFILL",
+      title: "Rejoignez le mouvement #ChooseToRefill",
+      paragraphs: [
+        "Pensée autour de la recharge, l’hydratation durable est devenue notre produit le plus vendu chez STREAMZ. Notre initiative vise à fournir une eau potable pure et sûre, tout en réduisant considérablement la pollution liée aux bouteilles en plastique. Votre soutien permet d’éviter que des millions de bouteilles en plastique ne finissent chaque année dans les décharges.",
+        "Agissez durablement. Participez au changement et rejoignez le mouvement #ChooseToRefill.",
+      ],
+      cta: "Découvrir la recharge",
+      secondary: "Trouver un magasin",
+    },
+    productSection: {
+      title: "Nos produits",
       description:
-        "Chez Water Street NRG, nous comprenons l’importance de l’eau comme élément fondamental de la vie. C’est pourquoi nous avons soigneusement conçu notre entreprise pour répondre aux besoins variés de nos clients. Notre engagement repose sur trois principes essentiels :",
+        "Choisissez une gamme pour découvrir chaque produit et sa composition.",
+      explore: "Découvrir",
+      all: "Tous les produits",
+    },
+    productPage: {
+      composition: "Composition",
+      range: "Dans cette gamme",
+      back: "Toutes les gammes",
+      notFound: "Ce produit est introuvable.",
+    },
+    about: {
+      title: "À propos de STREAMZ",
+      story:
+        "Fondée en 2023, notre aventure a commencé avec une vision simple mais puissante : rendre l’eau potable de haute qualité accessible à tous. Au fil du temps, nous voulons que notre entreprise devienne un symbole de pureté et de fiabilité.",
+      commitmentTitle: "Notre engagement",
+      commitment:
+        "Chez Water Street NRG, nous comprenons l’importance de l’eau comme élément fondamental de la vie. Notre engagement repose sur trois principes essentiels :",
     },
     principles: [
       [
-        "01",
         "Assurance qualité",
-        "Nous respectons les normes les plus élevées de purification et de traitement de l’eau afin de garantir que notre produit soit d’une qualité et d’une pureté irréprochables. De plus, nos infrastructures de pointe et nos procédures rigoureuses de contrôle qualité vous assurent le meilleur. La qualité de notre eau est vérifiée par des laboratoires accrédités selon les exigences de la norme SANS 241.",
+        "Nous respectons les normes les plus élevées de purification et de traitement de l’eau. Nos infrastructures de pointe et nos contrôles qualité rigoureux vous assurent le meilleur. La qualité de notre eau est vérifiée par des laboratoires accrédités selon la norme SANS 241.",
       ],
       [
-        "02",
         "Satisfaction client",
-        "Votre satisfaction est au cœur de nos activités. Nous faisons quotidiennement tout notre possible pour écouter vos besoins et proposer des solutions personnalisées qui dépassent vos attentes. Notre équipe amicale et compétente est toujours prête à vous aider.",
+        "Votre satisfaction est au cœur de nos activités. Nous écoutons vos besoins et proposons des solutions personnalisées. Notre équipe amicale et compétente est toujours prête à vous aider.",
       ],
       [
-        "03",
         "Impact communautaire",
-        "Nous croyons en l’importance de redonner aux communautés que nous servons. Nos pratiques durables et notre conscience environnementale reflètent notre engagement à préserver la ressource la plus précieuse de notre planète — l’eau.",
+        "Nous croyons en l’importance de redonner aux communautés que nous servons. Nos pratiques durables reflètent notre engagement à préserver la ressource la plus précieuse de notre planète : l’eau.",
       ],
     ],
-    story: {
-      eyebrow: "Notre aventure",
-      title: "Une vision simple mais puissante.",
-      description:
-        "Fondée en 2023, notre aventure a commencé avec une vision simple mais puissante : rendre l’eau potable de haute qualité accessible à tous. Au fil du temps, nous voulons que notre entreprise devienne un symbole de pureté et de fiabilité.",
-      cta: "Rejoignez notre aventure",
-    },
-    productSection: {
-      eyebrow: "Notre offre",
-      title: "Notre gamme de produits et services",
-    },
-    products: {
-      purifiedWater: "Eau potable purifiée",
-      purifiedWaterDescription:
-        "Notre produit phare est une eau purifiée cristalline, disponible en plusieurs formats pour répondre à vos besoins quotidiens.",
-      purifiedWaterMeta: "Plusieurs formats",
-      dispensers: "Distributeurs d’eau",
-      dispensersDescription:
-        "Nous proposons une gamme de distributeurs d’eau pour les maisons, bureaux et entreprises, garantissant un accès facile à l’eau fraîche à tout moment.",
-      dispensersMeta: "Maisons & bureaux",
-      juice: "Jus",
-      juiceDescription:
-        "Notre gamme de jus, préparée à base d’eau purifiée, est disponible en différents formats (de 250 ml à 5 L).",
-      juiceMeta: "De 250 ml à 5 L",
-      filtration: "Systèmes de filtration d’eau",
-      filtrationDescription:
-        "Pour ceux qui recherchent des solutions complètes de traitement de l’eau, nous proposons des systèmes de filtration avancés garantissant une eau pure et sûre à portée de main. Nous pouvons également mettre à disposition notre réseau de prestataires de confiance pour les forages et projets industriels sur demande.",
-      filtrationMeta: "Sur demande",
-    },
-    menu: {
-      eyebrow: "Tarifs",
-      title: "Le menu STREAMZ",
-      note: "Prix en rands sud-africains (ZAR). Contactez-nous pour les disponibilités et la livraison.",
-      empty: "Les tarifs de cette catégorie seront bientôt disponibles.",
-      sections: [
-        {
-          key: "water",
-          title: "Eau potable",
-          items: [
-            ["Eau 500 ml", "R6.00", "/images/500ml_water.png"],
-            ["Eau 500 ml — pack de 6", "R33.00", ""],
-            ["Eau 500 ml — pack de 12", "R66.00", ""],
-            ["Eau 1,5 L", "R12.00", "/images/1500ml_water.png"],
-            ["Bouteille vide 5 L", "R20.00", ""],
-            ["Bouteille vide 10 L", "R38.00", ""],
-            ["Bidon 18,9 L", "R121.00", ""],
-            ["Bidon avec poignées 10 L", "R99.00", ""],
-            ["Bidon carré avec robinet 25 L", "R275.00", ""],
-            ["Robinet", "R35.00", ""],
-          ],
-        },
-        {
-          key: "juice",
-          title: "Jus",
-          items: [
-            ["Jus d’orange", "Prix sur demande", "/images/orange_juice.png"],
-            ["Jus de mangue", "Prix sur demande", "/images/mango_juice.png"],
-          ],
-        },
-        {
-          key: "dispensers",
-          title:
-            "Distributeur sur pied Executive, eau chaude et froide, sans contact",
-          items: [],
-          details: {
-            image: "/images/Executive Hot and Cold Floorstanding.png",
-            category: "Refroidisseurs / Distributeurs d’eau",
-            brand: "Classic / Water Street NRG",
-            heating: "85-95 °C, 500 W",
-            cooling: "5-10 °C, 90 W",
-            refrigerant: "R134a",
-            voltage: "220-240 V",
-            dimensions: "L 34 cm ; l 33 cm ; H 98 cm",
-            features: [
-              "Compresseur de refroidissement",
-              "Réservoirs chaud et froid en acier inoxydable de qualité alimentaire",
-              "Compresseur silencieux, haute performance et longue durée de vie",
-              "Installation et entretien faciles",
-              "Pièces en plastique ABS antibactérien",
-            ],
-          },
-        },
+    serviceSection: { title: "Nos services" },
+    services: {
+      delivery: [
+        "Livraison et installation",
+        "Un service dédié livre et installe nos produits. Vérifiez si votre zone est desservie.",
+      ],
+      refill: [
+        "Recharge en magasin",
+        "Rapportez vos bouteilles et bidons pour les remplir d’eau purifiée STREAMZ.",
+      ],
+      customBottles: [
+        "Bouteilles personnalisées",
+        "Des bouteilles à votre image pour vos anniversaires, mariages et événements d’entreprise.",
+      ],
+      packaging: [
+        "Matériaux d’emballage",
+        "Des produits en plastique sans BPA.",
       ],
     },
-    serviceSection: { eyebrow: "Autres services", title: "Nos services" },
-    services: {
-      packaging: "Matériaux d’emballage",
-      packagingDescription: "Produits plastiques, sans BPA.",
-      delivery: "Livraison et installation",
-      deliveryDescription:
-        "Nous disposons d’un service dédié à l’installation et à la livraison de nos produits. N’hésitez pas à nous consulter.",
-      customBottles: "Bouteilles personnalisées",
-      customBottlesDescription:
-        "Nous pouvons personnaliser vos bouteilles pour rendre vos célébrations vraiment uniques (anniversaires, mariages, événements d’entreprise, etc.).",
+    stores: {
+      title: "Magasins & livraison",
+      description:
+        "Trouvez le magasin STREAMZ le plus proche, et vérifiez s’il livre dans votre zone.",
+      search: "Ville, quartier ou code postal",
+      searchLabel: "Rechercher un magasin",
+      count: (n) => `${n} magasin${n > 1 ? "s" : ""}`,
+      noResult:
+        "Aucun magasin trouvé pour cette recherche. Contactez-nous : nous livrons peut-être votre zone.",
+      directions: "Itinéraire",
+      call: "Appeler",
+      hours: "Horaires",
+      delivery: "Livraison depuis ce magasin",
+      deliveryAreasPending:
+        "Zones de livraison sur demande : contactez le magasin.",
+      serviceNames: {
+        shop: "Magasin",
+        refill: "Recharge",
+        delivery: "Livraison",
+        installation: "Installation",
+      },
+      mapTitle: "Carte du magasin",
     },
     contact: {
       ...shared.contact,
-      eyebrow: "Rejoignez notre aventure",
       title: "Faites la différence avec STREAMZ",
       description:
-        "Chez Water Street NRG, nous vous invitons à participer à notre mission pour faire la différence grâce à l’eau. Découvrez le goût de la pureté et la garantie de la qualité. Ensemble, parions sur un avenir plus sain et plus durable.",
-      cta: "Nous contacter",
+        "Une question, une commande ou une demande de livraison ? Notre équipe vous répond.",
+      emailLabel: "E-mail",
+      phoneLabel: "Téléphone",
+      addressLabel: "Adresse",
+      cta: "Nous écrire",
     },
     footer: {
       tagline: "Quand pureté rime avec commodité.",
+      registration: "N° d’enregistrement",
+      vat: "N° TVA",
       rights: "Tous droits réservés.",
     },
   },
@@ -219,152 +160,124 @@ export const translations = {
     languageName: "Français",
     documentTitle: "Your Trusted Source for Pure, Refreshing Water",
     navigation: {
-      home: "Home",
-      story: "Our story",
-      products: "Products",
+      products: "Our products",
+      about: "About",
       services: "Services",
+      stores: "Stores & delivery",
       contact: "Contact",
     },
+    pending: "To be confirmed",
     hero: {
-      eyebrow: "Water for life and living",
       title: "Your Trusted Source for Pure, Refreshing Water",
       description:
-        "At Water Street NRG, we are committed to providing communities with access to clean, pure, and refreshing water solutions. We have set out on a mission to deliver premium quality water products and services that not only quench your thirst but also enhance your overall well-being.",
-      cta: "Explore our range",
-      alt: "Illustration of a STREAMZ water bottle",
+        "At Water Street NRG, we provide communities with access to clean, pure and refreshing water, with premium quality products and services.",
+      cta: "Explore our products",
+      secondary: "Find a store",
+      alt: "STREAMZ water bottle in a water splash",
     },
     stats: [
       ["2023", "Established"],
       ["SANS 241", "Quality standard"],
-      ["3", "Core principles"],
+      ["BPA free", "Packaging"],
     ],
-    mission: {
-      eyebrow: "Water Street NRG",
-      title: "Our Commitment",
+    refillBanner: {
+      eyebrow: "STREAMZ REFILL",
+      title: "Take Part in the #ChooseToRefill movement",
+      paragraphs: [
+        "Built around the power of refilling, STREAMZ has made sustainable hydration our top selling product. Our initiative is dedicated to providing pure, safe drinking water while significantly reducing plastic bottle pollution. Your support helps prevent millions of plastic bottles from reaching landfills annually.",
+        "Make a lasting impact. Be part of the change and join the #ChooseToRefill movement.",
+      ],
+      cta: "Discover STREAMZ Refill",
+      secondary: "Find a store",
+    },
+    productSection: {
+      title: "Our products",
       description:
-        "At Water Street NRG, we understand the significance of water as a fundamental element of life. With this understanding, we have meticulously designed our business to cater to the diverse needs of our customers. Our commitment is built on three core principles:",
+        "Choose a range to discover each product and its composition.",
+      explore: "Explore",
+      all: "All products",
+    },
+    productPage: {
+      composition: "Composition",
+      range: "In this range",
+      back: "All ranges",
+      notFound: "This product could not be found.",
+    },
+    about: {
+      title: "About STREAMZ",
+      story:
+        "Established in 2023, our journey began with a simple yet powerful vision: to make high-quality drinking water accessible to everyone. Over the years, we want our company to stand as a symbol of purity and reliability.",
+      commitmentTitle: "Our Commitment",
+      commitment:
+        "At Water Street NRG, we understand the significance of water as a fundamental element of life. Our commitment is built on three core principles:",
     },
     principles: [
       [
-        "01",
         "Quality Assurance",
-        "We adhere to the highest standards of water purification and treatment to ensure that every drop we provide is of the utmost quality and purity. Our state-of-the-art facility and rigorous quality control processes guarantee that you receive nothing but the best. Our water quality is checked by accredited laboratories against SANS 241 requirements.",
+        "We adhere to the highest standards of water purification and treatment. Our state-of-the-art facility and rigorous quality control processes guarantee that you receive nothing but the best. Our water quality is checked by accredited laboratories against SANS 241 requirements.",
       ],
       [
-        "02",
         "Customer Satisfaction",
-        "Your satisfaction is at the heart of our operations. We go the extra mile to listen to your needs and deliver personalized solutions that exceed your expectations. Our friendly and knowledgeable team is always ready to assist you.",
+        "Your satisfaction is at the heart of our operations. We listen to your needs and deliver personalised solutions. Our friendly and knowledgeable team is always ready to assist you.",
       ],
       [
-        "03",
         "Community Impact",
-        "We believe in giving back to the communities we serve. Our sustainable practices and environmental consciousness reflect our commitment to preserving our planet’s most precious resource — water.",
+        "We believe in giving back to the communities we serve. Our sustainable practices reflect our commitment to preserving our planet’s most precious resource: water.",
       ],
     ],
-    story: {
-      eyebrow: "Our journey",
-      title: "A simple yet powerful vision.",
-      description:
-        "Established in 2023, our journey began with a simple yet powerful vision: to make high-quality drinking water accessible to everyone. Over the years, we want our company to stand as a symbol of purity and reliability.",
-      cta: "Join our journey",
-    },
-    productSection: {
-      eyebrow: "Our offering",
-      title: "Our Range of Products and Services",
-    },
-    products: {
-      purifiedWater: "Purified Drinking Water",
-      purifiedWaterDescription:
-        "Our flagship product is crystal-clear purified water, available in various sizes to meet your daily hydration needs.",
-      purifiedWaterMeta: "Various sizes",
-      dispensers: "Water Dispensers",
-      dispensersDescription:
-        "We offer a range of water dispensers designed for homes, offices, and businesses, ensuring easy access to refreshing water at any time.",
-      dispensersMeta: "Homes & offices",
-      juice: "Juice range",
-      juiceDescription:
-        "Our STREAMZ juice range made of purified water available in various pack sizes (from 250 ml to 5 L).",
-      juiceMeta: "From 250 ml to 5 L",
-      filtration: "Water Filtration Systems",
-      filtrationDescription:
-        "For those seeking comprehensive water treatment solutions, we provide advanced filtration systems that guarantee pure, safe water at your fingertips. We will also avail our network of reliable service providers upon request for borehole requirements and industrial projects.",
-      filtrationMeta: "On request",
-    },
-    menu: {
-      eyebrow: "Pricing",
-      title: "The STREAMZ Menu",
-      note: "Prices in South African rand (ZAR). Contact us for availability and delivery.",
-      empty: "Pricing for this category will be available soon.",
-      sections: [
-        {
-          key: "water",
-          title: "Drinking water",
-          items: [
-            ["Water 500 ml", "R6.00", "/images/500ml_water.png"],
-            ["Water 500 ml 6 pack", "R33.00", ""],
-            ["Water 500 ml 12 pack", "R66.00", ""],
-            ["Water 1.5 L", "R12.00", "/images/1500ml_water.png"],
-            ["Bottle 5 L clear", "R20.00", ""],
-            ["Bottle 10 L clear", "R38.00", ""],
-            ["Water container 18.9 L", "R121.00", ""],
-            ["Water container 10 L with handles", "R99.00", ""],
-            ["Container 25 L square with tap", "R275.00", ""],
-            ["Tap for container", "R35.00", ""],
-          ],
-        },
-        {
-          key: "juice",
-          title: "Juices",
-          items: [
-            ["Orange juice", "Price on request", "/images/orange_juice.png"],
-            ["Mango juice", "Price on request", "/images/mango_juice.png"],
-          ],
-        },
-        {
-          key: "dispensers",
-          title: "Executive Hot and Cold Floorstanding Non-Touch Dispenser",
-          items: [],
-          details: {
-            image: "/images/Executive Hot and Cold Floorstanding.png",
-            category: "Water coolers / Dispensers",
-            brand: "Classic / Water Street NRG",
-            heating: "85-95 °C, 500 W",
-            cooling: "5-10 °C, 90 W",
-            refrigerant: "R134a",
-            voltage: "220-240 V",
-            dimensions: "L 34 cm; W 33 cm; H 98 cm",
-            features: [
-              "Compressor cooling",
-              "Hot and cold tanks in food-grade stainless steel",
-              "Low-noise, high-performance and long-life compressor",
-              "Easy installation and maintenance",
-              "Plastic parts made of antibacterial ABS materials",
-            ],
-          },
-        },
-      ],
-    },
-    serviceSection: { eyebrow: "Our Services", title: "Beyond water" },
+    serviceSection: { title: "Our services" },
     services: {
-      packaging: "Packaging materials",
-      packagingDescription: "BPA free plastic products.",
-      delivery: "Delivery and installation",
-      deliveryDescription:
-        "We have a dedicated department for installation and delivery of our products, please ask us!",
-      customBottles: "Personalized bottles",
-      customBottlesDescription:
-        "We can tailor make products for you to make your celebrations really special (birthdays, weddings, company events etc.).",
+      delivery: [
+        "Delivery and installation",
+        "A dedicated department delivers and installs our products. Check whether we deliver to your area.",
+      ],
+      refill: [
+        "In-store refill",
+        "Bring back your bottles and containers to refill them with STREAMZ purified water.",
+      ],
+      customBottles: [
+        "Personalised bottles",
+        "Tailor-made bottles for birthdays, weddings and company events.",
+      ],
+      packaging: ["Packaging materials", "BPA-free plastic products."],
+    },
+    stores: {
+      title: "Stores & delivery",
+      description:
+        "Find your nearest STREAMZ store, and check whether it delivers to your area.",
+      search: "Town, suburb or postal code",
+      searchLabel: "Search for a store",
+      count: (n) => `${n} store${n > 1 ? "s" : ""}`,
+      noResult:
+        "No store found for this search. Contact us: we may still deliver to your area.",
+      directions: "Directions",
+      call: "Call",
+      hours: "Trading hours",
+      delivery: "Delivery from this store",
+      deliveryAreasPending:
+        "Delivery areas on request: please contact the store.",
+      serviceNames: {
+        shop: "Shop",
+        refill: "Refill",
+        delivery: "Delivery",
+        installation: "Installation",
+      },
+      mapTitle: "Store map",
     },
     contact: {
       ...shared.contact,
-      eyebrow: "Join us",
       title: "Discover the difference with STREAMZ",
       description:
-        "At Water Street NRG, we invite you to be a part of our mission to make a difference through water. Join us in experiencing the taste of purity and the assurance of quality. Together, we can raise a glass to a healthier, more sustainable future.",
-      cta: "Contact us",
+        "A question, an order or a delivery request? Our team will get back to you.",
+      emailLabel: "Email",
+      phoneLabel: "Phone",
+      addressLabel: "Address",
+      cta: "Email us",
     },
     footer: {
       tagline: "Where Purity Meets Convenience.",
+      registration: "Reg no.",
+      vat: "VAT no.",
       rights: "All rights reserved.",
     },
   },
