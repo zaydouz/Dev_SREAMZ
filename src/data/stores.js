@@ -1,17 +1,15 @@
 // Magasins STREAMZ. Pour ouvrir un nouveau magasin, ajouter une entree ici :
-// le store locator et la partie livraison se mettent a jour automatiquement.
-// `deliveryAreas` liste les quartiers / villes livres depuis ce magasin.
+// le store locator se met a jour automatiquement.
 
 export const stores = [
   {
     id: "roodepoort",
     name: "STREAMZ Roodepoort",
     address:
-      "Corner Victoria and Cascades roads, Roodepoort, Johannesburg, Gauteng, 1715",
-    phone: "078 123 1829",
+      "Corner Victoria and Cascades Roads, Roodepoort, Johannesburg, Gauteng, 1715",
+    phone: "+27 (78) 123 1829",
     hours: null,
-    services: ["shop", "refill", "delivery", "installation"],
-    deliveryAreas: [],
+    services: ["shop", "refill", "installation"],
   },
 ];
 

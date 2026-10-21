@@ -3,6 +3,7 @@
 
 export const navigation = [
   { key: "products", href: "#products" },
+  { key: "water", href: "#process" },
   { key: "about", href: "#about" },
   { key: "services", href: "#services" },
   { key: "stores", href: "#stores" },
@@ -10,14 +11,14 @@ export const navigation = [
 ];
 
 export const services = [
-  { key: "delivery", href: "#stores" },
+  { key: "installation", href: "#contact" },
   { key: "refill", href: "#/products/refill" },
   { key: "customBottles", href: "#contact" },
   { key: "packaging", href: "#contact" },
 ];
 
 const shared = {
-  contact: { email: "info@waterstreetnrg.co.za", phone: "078 123 1829" },
+  contact: { email: "info@swsnrg.co.za", phone: "+27 (78) 123 1829" },
   company: {
     name: "Water Street NRG",
     registration: "2023 / 642357 / 07",
@@ -32,9 +33,10 @@ export const translations = {
     documentTitle: "Votre source fiable pour une eau pure et rafraîchissante",
     navigation: {
       products: "Nos produits",
+      water: "Notre eau",
       about: "À propos",
       services: "Services",
-      stores: "Magasins & livraison",
+      stores: "Magasins",
       contact: "Contact",
     },
     pending: "À confirmer",
@@ -52,6 +54,7 @@ export const translations = {
       ["Sans BPA", "Emballages"],
     ],
     refillBanner: {
+      alt: "Femme buvant une bouteille d’eau STREAMZ",
       eyebrow: "STREAMZ REFILL",
       title: "Rejoignez le mouvement #ChooseToRefill",
       paragraphs: [
@@ -69,8 +72,20 @@ export const translations = {
       all: "Tous les produits",
     },
     productPage: {
-      composition: "Composition",
-      range: "Dans cette gamme",
+      // Libelle de la fenetre de details selon la gamme (detailsType du catalogue).
+      details: {
+        composition: { title: "Composition", button: "Voir la composition" },
+        specifications: {
+          title: "Caractéristiques techniques",
+          button: "Voir les caractéristiques",
+        },
+        features: {
+          title: "Caractéristiques",
+          button: "Voir les caractéristiques",
+        },
+      },
+      close: "Fermer",
+      variants: "Choisir un produit",
       back: "Toutes les gammes",
       notFound: "Ce produit est introuvable.",
     },
@@ -78,6 +93,7 @@ export const translations = {
       title: "À propos de STREAMZ",
       story:
         "Fondée en 2023, notre aventure a commencé avec une vision simple mais puissante : rendre l’eau potable de haute qualité accessible à tous. Au fil du temps, nous voulons que notre entreprise devienne un symbole de pureté et de fiabilité.",
+      photoAlt: "Eau versée dans un verre",
       commitmentTitle: "Notre engagement",
       commitment:
         "Chez Water Street NRG, nous comprenons l’importance de l’eau comme élément fondamental de la vie. Notre engagement repose sur trois principes essentiels :",
@@ -96,11 +112,52 @@ export const translations = {
         "Nous croyons en l’importance de redonner aux communautés que nous servons. Nos pratiques durables reflètent notre engagement à préserver la ressource la plus précieuse de notre planète : l’eau.",
       ],
     ],
+    // Etapes simplifiees du processus de traitement fourni par le client
+    // (13 operations regroupees en 7 etapes).
+    process: {
+      title: "Notre processus de purification",
+      description:
+        "Chaque goutte d’eau STREAMZ passe par sept étapes de traitement avant d’arriver jusqu’à vous. Passez sur une étape pour découvrir ce qui s’y passe.",
+      steps: [
+        [
+          "Pré-chloration",
+          "Un dosage précis de chlore désinfecte l’eau brute dès son arrivée.",
+        ],
+        [
+          "Filtration",
+          "Des filtres multimédia, à sable vert et à charbon actif retirent les sédiments, le fer et le chlore.",
+        ],
+        [
+          "Adoucissement",
+          "Un adoucisseur retire le calcaire, puis la déchloration et un anti-tartre protègent la membrane d’osmose.",
+        ],
+        [
+          "Osmose inverse",
+          "Une membrane très fine retient les sels et minéraux dissous : seule l’eau pure la traverse.",
+        ],
+        [
+          "Désinfection UV",
+          "Les rayons ultraviolets neutralisent les bactéries et les virus.",
+        ],
+        [
+          "Équilibrage",
+          "L’ajustement du pH, le filtre à calcite et une légère post-chloration équilibrent et protègent l’eau.",
+        ],
+        [
+          "Stockage & contrôle",
+          "L’eau purifiée est stockée avant distribution, et sa qualité est contrôlée par des laboratoires accrédités selon la norme SANS 241.",
+        ],
+      ],
+      diagram: "Voir le schéma technique complet",
+      diagramTitle: "Schéma de traitement de l’eau",
+      diagramAlt:
+        "Schéma technique complet de l’installation de traitement de l’eau STREAMZ",
+    },
     serviceSection: { title: "Nos services" },
     services: {
-      delivery: [
-        "Livraison et installation",
-        "Un service dédié livre et installe nos produits. Vérifiez si votre zone est desservie.",
+      installation: [
+        "Installation",
+        "Un service dédié installe nos produits. N’hésitez pas à nous consulter.",
       ],
       refill: [
         "Recharge en magasin",
@@ -116,24 +173,19 @@ export const translations = {
       ],
     },
     stores: {
-      title: "Magasins & livraison",
-      description:
-        "Trouvez le magasin STREAMZ le plus proche, et vérifiez s’il livre dans votre zone.",
+      title: "Nos magasins",
+      description: "Trouvez le magasin STREAMZ le plus proche de chez vous.",
       search: "Ville, quartier ou code postal",
       searchLabel: "Rechercher un magasin",
       count: (n) => `${n} magasin${n > 1 ? "s" : ""}`,
       noResult:
-        "Aucun magasin trouvé pour cette recherche. Contactez-nous : nous livrons peut-être votre zone.",
+        "Aucun magasin trouvé pour cette recherche. Contactez-nous, nous vous orienterons.",
       directions: "Itinéraire",
       call: "Appeler",
       hours: "Horaires",
-      delivery: "Livraison depuis ce magasin",
-      deliveryAreasPending:
-        "Zones de livraison sur demande : contactez le magasin.",
       serviceNames: {
         shop: "Magasin",
         refill: "Recharge",
-        delivery: "Livraison",
         installation: "Installation",
       },
       mapTitle: "Carte du magasin",
@@ -141,8 +193,7 @@ export const translations = {
     contact: {
       ...shared.contact,
       title: "Faites la différence avec STREAMZ",
-      description:
-        "Une question, une commande ou une demande de livraison ? Notre équipe vous répond.",
+      description: "Une question ou une commande ? Notre équipe vous répond.",
       emailLabel: "E-mail",
       phoneLabel: "Téléphone",
       addressLabel: "Adresse",
@@ -161,9 +212,10 @@ export const translations = {
     documentTitle: "Your Trusted Source for Pure, Refreshing Water",
     navigation: {
       products: "Our products",
+      water: "Our water",
       about: "About",
       services: "Services",
-      stores: "Stores & delivery",
+      stores: "Stores",
       contact: "Contact",
     },
     pending: "To be confirmed",
@@ -181,6 +233,7 @@ export const translations = {
       ["BPA free", "Packaging"],
     ],
     refillBanner: {
+      alt: "Woman drinking from a STREAMZ water bottle",
       eyebrow: "STREAMZ REFILL",
       title: "Take Part in the #ChooseToRefill movement",
       paragraphs: [
@@ -198,8 +251,16 @@ export const translations = {
       all: "All products",
     },
     productPage: {
-      composition: "Composition",
-      range: "In this range",
+      details: {
+        composition: { title: "Composition", button: "View composition" },
+        specifications: {
+          title: "Specifications",
+          button: "View specifications",
+        },
+        features: { title: "Features", button: "View features" },
+      },
+      close: "Close",
+      variants: "Choose a product",
       back: "All ranges",
       notFound: "This product could not be found.",
     },
@@ -207,6 +268,7 @@ export const translations = {
       title: "About STREAMZ",
       story:
         "Established in 2023, our journey began with a simple yet powerful vision: to make high-quality drinking water accessible to everyone. Over the years, we want our company to stand as a symbol of purity and reliability.",
+      photoAlt: "Water being poured into a glass",
       commitmentTitle: "Our Commitment",
       commitment:
         "At Water Street NRG, we understand the significance of water as a fundamental element of life. Our commitment is built on three core principles:",
@@ -225,11 +287,50 @@ export const translations = {
         "We believe in giving back to the communities we serve. Our sustainable practices reflect our commitment to preserving our planet’s most precious resource: water.",
       ],
     ],
+    process: {
+      title: "Our purification process",
+      description:
+        "Every drop of STREAMZ water goes through seven treatment steps before it reaches you. Hover over a step to see what happens.",
+      steps: [
+        [
+          "Pre-chlorination",
+          "A precise chlorine dose disinfects the raw water as soon as it arrives.",
+        ],
+        [
+          "Filtration",
+          "Multimedia, green sand and activated carbon filters remove sediment, iron and chlorine.",
+        ],
+        [
+          "Softening",
+          "A softener removes hardness, then de-chlorination and an antiscalant protect the reverse osmosis membrane.",
+        ],
+        [
+          "Reverse osmosis",
+          "An ultra-fine membrane holds back dissolved salts and minerals: only pure water passes through.",
+        ],
+        [
+          "UV disinfection",
+          "Ultraviolet light neutralises bacteria and viruses.",
+        ],
+        [
+          "Balancing",
+          "pH adjustment, a calcite filter and light post-chlorination balance and protect the water.",
+        ],
+        [
+          "Storage & testing",
+          "The purified water is stored before distribution, and its quality is checked by accredited laboratories against SANS 241.",
+        ],
+      ],
+      diagram: "View the full technical diagram",
+      diagramTitle: "Water treatment diagram",
+      diagramAlt:
+        "Full technical diagram of the STREAMZ water treatment installation",
+    },
     serviceSection: { title: "Our services" },
     services: {
-      delivery: [
-        "Delivery and installation",
-        "A dedicated department delivers and installs our products. Check whether we deliver to your area.",
+      installation: [
+        "Installation",
+        "A dedicated department installs our products, please ask us!",
       ],
       refill: [
         "In-store refill",
@@ -242,24 +343,19 @@ export const translations = {
       packaging: ["Packaging materials", "BPA-free plastic products."],
     },
     stores: {
-      title: "Stores & delivery",
-      description:
-        "Find your nearest STREAMZ store, and check whether it delivers to your area.",
+      title: "Our stores",
+      description: "Find your nearest STREAMZ store.",
       search: "Town, suburb or postal code",
       searchLabel: "Search for a store",
       count: (n) => `${n} store${n > 1 ? "s" : ""}`,
       noResult:
-        "No store found for this search. Contact us: we may still deliver to your area.",
+        "No store found for this search. Contact us and we’ll point you in the right direction.",
       directions: "Directions",
       call: "Call",
       hours: "Trading hours",
-      delivery: "Delivery from this store",
-      deliveryAreasPending:
-        "Delivery areas on request: please contact the store.",
       serviceNames: {
         shop: "Shop",
         refill: "Refill",
-        delivery: "Delivery",
         installation: "Installation",
       },
       mapTitle: "Store map",
@@ -267,8 +363,7 @@ export const translations = {
     contact: {
       ...shared.contact,
       title: "Discover the difference with STREAMZ",
-      description:
-        "A question, an order or a delivery request? Our team will get back to you.",
+      description: "A question or an order? Our team will get back to you.",
       emailLabel: "Email",
       phoneLabel: "Phone",
       addressLabel: "Address",

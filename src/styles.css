@@ -2,8 +2,10 @@
 
 /* Charte reprise de la brochure STREAMZ */
 :root {
-  --blue: #063af7;
-  --blue-dark: #0430c9;
+  /* Bleu ocean profond, en accord avec les photos ; remplace le bleu electrique
+     #063af7 de la brochure, juge trop agressif a l'ecran. */
+  --blue: #0f4c81;
+  --blue-dark: #0b3a63;
   --cyan: #83dbeb;
   --grey: #dfe1e2;
   --grey-light: #f2f3f4;
@@ -227,7 +229,6 @@ img.is-placeholder {
 .hero {
   align-items: center;
   background: linear-gradient(180deg, var(--white) 0%, var(--grey-light) 100%);
-  border-left: 6px solid var(--cyan);
   display: grid;
   gap: clamp(32px, 5vw, 80px);
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -238,7 +239,7 @@ img.is-placeholder {
 /* Skyline de Johannesburg en filigrane : desaturee, en multiply pour que le
    fond clair de l'image disparaisse, et estompee vers le haut. */
 .hero::before {
-  background: url("/images/johannesburg-skyline.jpg") center 58% / cover
+  background: url("/images/decor-johannesburg-skyline.jpg") center 58% / cover
     no-repeat;
   content: "";
   filter: grayscale(1);
@@ -328,15 +329,36 @@ img.is-placeholder {
   background: var(--blue);
   color: var(--white);
   display: grid;
-  gap: 24px clamp(40px, 6vw, 96px);
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: min(40%, 440px) minmax(0, 1fr);
+}
+/* Photo collee au bord gauche, pleine hauteur, qui se fond dans le bleu.
+   Colonne limitee a 440px : la photo source ne fait que 672px de large et
+   pixellise si on l'agrandit davantage. */
+.refill-photo {
+  min-height: 480px;
+  position: relative;
+}
+.refill-photo img {
+  height: 100%;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(to right, #000 75%, transparent);
+  mask-image: linear-gradient(to right, #000 75%, transparent);
+  object-fit: cover;
+  object-position: 60% 20%;
+  position: absolute;
+  width: 100%;
+}
+.refill-copy {
+  align-self: center;
+  padding: clamp(64px, 9vw, 110px) var(--gutter) clamp(64px, 9vw, 110px)
+    clamp(24px, 4vw, 64px);
 }
 .refill-banner .eyebrow {
   color: var(--cyan);
 }
 .refill-banner h2 {
   font-size: clamp(2rem, 4vw, 3.2rem);
-  margin: 0;
+  margin-bottom: 24px;
 }
 .refill-banner h2 span {
   color: var(--cyan);
@@ -382,13 +404,12 @@ img.is-placeholder {
   box-shadow: 0 24px 40px -28px rgba(25, 25, 25, 0.5);
   transform: translateY(-4px);
 }
-.category-image,
-.range-image {
+.category-image {
   height: 200px;
   margin-bottom: 18px;
 }
 .category-image img,
-.range-image img,
+.variant-image img,
 .product-sheet-image img {
   display: block;
   height: 100%;
@@ -445,74 +466,169 @@ img.is-placeholder {
   color: var(--muted);
   font-size: 18px;
   font-weight: 300;
+  margin-bottom: 28px;
+}
+/* Selecteur des produits de la gamme, juste sous le titre. */
+.variant-picker {
   margin-bottom: 36px;
+}
+.variant-label {
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.variant-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.variant {
+  align-items: center;
+  background: var(--grey-light);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 8px;
+  text-align: center;
+  transition: border-color 0.2s ease;
+  width: 112px;
+}
+.variant:hover {
+  border-color: var(--grey);
+}
+.variant[aria-current="page"] {
+  background: var(--white);
+  border-color: var(--blue);
+}
+.variant-image {
+  display: block;
+  height: 64px;
+  width: 100%;
+}
+.variant-name {
+  -webkit-box-orient: vertical;
+  color: var(--muted);
+  display: -webkit-box;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  line-height: 1.4;
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
+.variant:hover .variant-name,
+.variant[aria-current="page"] .variant-name {
+  color: var(--blue);
+}
+.variant[aria-current="page"] .variant-name {
+  font-weight: 500;
 }
 .product-sheet-info h2 {
   font-size: 20px;
   margin-bottom: 12px;
 }
-.composition {
-  margin: 0;
+/* Composition : fenetre par-dessus la page, avec une grille de tuiles. */
+html:has(.composition-dialog[open]) {
+  overflow: hidden;
 }
-.composition div {
-  border-bottom: 1px solid var(--line);
-  display: grid;
+.composition-dialog {
+  background: var(--white);
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.45);
+  color: var(--ink);
+  max-height: 85vh;
+  max-width: min(640px, calc(100% - 32px));
+  padding: clamp(24px, 4vw, 40px);
+  width: 100%;
+}
+.composition-dialog[open] {
+  animation: dialog-in 0.25s ease;
+}
+.composition-dialog::backdrop {
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  background: rgba(25, 25, 25, 0.45);
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+.composition-header {
+  align-items: start;
+  display: flex;
   gap: 16px;
-  grid-template-columns: 1fr 1fr;
-  padding: 10px 0;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
-.composition dt {
-  color: var(--muted);
-}
-.composition dd {
-  font-weight: 500;
+.composition-header h2 {
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
   margin: 0;
-  text-align: right;
+}
+.composition-close {
+  background: var(--grey-light);
+  border: 0;
+  border-radius: 50%;
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 24px;
+  height: 40px;
+  line-height: 1;
+  width: 40px;
+}
+.composition-close:hover {
+  background: var(--grey);
+}
+.composition-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  margin: 0;
+}
+.composition-tile {
+  background: var(--grey-light);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  padding: 16px 12px;
+  text-align: center;
+}
+.composition-tile dd {
+  color: var(--blue);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+}
+.composition-tile dd.is-text {
+  font-size: 15px;
+}
+.composition-tile dd.is-pending {
+  font-size: 14px;
+}
+.composition-tile dt {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.03em;
 }
 .is-pending {
   color: var(--muted);
   font-style: italic;
   font-weight: 300 !important;
-}
-.product-range {
-  border-top: 1px solid var(--line);
-  margin-top: clamp(56px, 7vw, 88px);
-  padding-top: 40px;
-}
-.product-range h2 {
-  font-size: 24px;
-  margin-bottom: 24px;
-}
-.range-list {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(min(140px, 40vw), 1fr));
-}
-.range-item {
-  background: var(--grey-light);
-  border: 2px solid transparent;
-  border-radius: var(--radius);
-  display: grid;
-  grid-row: span 2;
-  grid-template-rows: subgrid;
-  padding: 16px;
-  row-gap: 6px;
-  text-align: center;
-}
-.range-item:hover {
-  border-color: var(--grey);
-}
-.range-item[aria-current="page"] {
-  border-color: var(--blue);
-}
-.range-image {
-  height: 150px;
-  margin-bottom: 8px;
-}
-.range-item span {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.35;
 }
 .not-found {
   text-align: center;
@@ -522,33 +638,47 @@ img.is-placeholder {
 .about {
   background: var(--grey-light);
   display: grid;
-  gap: 24px clamp(40px, 6vw, 96px);
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(0, 1fr) min(40%, 440px);
 }
-.about .principles {
-  grid-column: 1 / -1;
+.about-text {
+  padding: clamp(64px, 9vw, 110px) clamp(24px, 4vw, 64px)
+    clamp(64px, 9vw, 110px) var(--gutter);
 }
-.about-intro p,
-.commitment > p {
+/* Meme effet que le bandeau Refill : photo collee au bord droit, pleine
+   hauteur, qui se fond dans le gris. Colonne limitee a 440px pour eviter
+   la pixellisation (photo source de 712px de large). */
+.about-photo {
+  min-height: 480px;
+  position: relative;
+}
+.about-photo img {
+  height: 100%;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 22%);
+  mask-image: linear-gradient(to right, transparent, #000 22%);
+  object-fit: cover;
+  object-position: 50% 30%;
+  position: absolute;
+  width: 100%;
+}
+.about-text > p {
   color: var(--muted);
   font-size: 18px;
   font-weight: 300;
 }
-.commitment h2 {
+.about-text h2:not(.section-title) {
   font-size: 26px;
-  margin-bottom: 12px;
+  margin: 32px 0 12px;
 }
 .principles {
   display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
   margin-top: 32px;
 }
 .principles article {
   background: var(--white);
   border-radius: var(--radius);
-  border-top: 4px solid var(--cyan);
-  padding: 24px;
+  padding: 20px 24px;
 }
 .principles h3 {
   color: var(--blue);
@@ -559,6 +689,122 @@ img.is-placeholder {
   color: var(--muted);
   font-size: 14px;
   margin: 0;
+}
+
+/* ---------- Processus de purification ---------- */
+.process-steps {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+}
+.process-step {
+  display: flex;
+}
+/* Carte retournable : recto (numero, icone, nom), verso (explication). */
+.process-card {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  perspective: 1000px;
+  text-align: left;
+  width: 100%;
+}
+.process-inner {
+  display: grid;
+  height: 100%;
+  min-height: 200px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+@media (hover: hover) {
+  .process-card:hover .process-inner {
+    transform: rotateY(180deg);
+  }
+}
+.process-card:focus-visible .process-inner,
+.process-card.is-flipped .process-inner {
+  transform: rotateY(180deg);
+}
+.process-face {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  grid-area: 1 / 1;
+  padding: 24px 20px;
+}
+.process-front {
+  background: var(--grey-light);
+  justify-content: flex-end;
+  position: relative;
+}
+.process-back {
+  background: var(--blue);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 300;
+  justify-content: center;
+  line-height: 1.55;
+  transform: rotateY(180deg);
+}
+.process-number {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+}
+.process-icon {
+  color: var(--blue);
+  fill: none;
+  height: 40px;
+  margin-bottom: auto;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+  width: 40px;
+}
+.process-title {
+  color: var(--blue);
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-top: 24px;
+}
+.process-back .process-title {
+  color: var(--cyan);
+  font-size: 15px;
+  margin: 0 0 8px;
+}
+.process-diagram-link {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: 800 16px var(--font);
+  padding: 0;
+}
+/* Le schema technique s'affiche dans une fenetre plus large. */
+.process-dialog {
+  max-width: min(1100px, calc(100% - 32px));
+}
+.process-diagram {
+  overflow-x: auto;
+}
+.process-diagram img {
+  display: block;
+  min-width: 720px;
+  width: 100%;
 }
 
 /* ---------- Services ---------- */
@@ -592,7 +838,7 @@ img.is-placeholder {
   align-self: end;
 }
 
-/* ---------- Magasins & livraison ---------- */
+/* ---------- Magasins ---------- */
 .stores {
   background: var(--grey-light);
 }
@@ -791,6 +1037,25 @@ img.is-placeholder {
   .about {
     grid-template-columns: 1fr;
   }
+  /* Sur tablette et mobile, la photo passe sous le texte et se fond vers le haut. */
+  .about-text {
+    padding: 64px var(--gutter) 8px;
+  }
+  .about-photo {
+    margin-inline: auto;
+    max-width: 440px;
+    min-height: 0;
+    width: 100%;
+  }
+  /* Photo entiere (pas de recadrage) pour garder le bas du verre ; fondu court
+     en haut pour ne pas effacer le logo au mur. */
+  .about-photo img {
+    display: block;
+    height: auto;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%);
+    mask-image: linear-gradient(to bottom, transparent, #000 10%);
+    position: static;
+  }
 }
 @media (max-width: 900px) {
   .principles {
@@ -825,11 +1090,27 @@ img.is-placeholder {
     gap: 12px;
   }
   .hero,
-  .refill-banner,
   .product-sheet,
   .locator,
   .contact {
     grid-template-columns: 1fr;
+  }
+  /* Sur mobile, la photo passe au-dessus et se fond vers le bas. */
+  .refill-banner {
+    grid-template-columns: 1fr;
+  }
+  .refill-photo {
+    margin-inline: auto;
+    max-width: 440px;
+    min-height: 380px;
+    width: 100%;
+  }
+  .refill-photo img {
+    -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent);
+    mask-image: linear-gradient(to bottom, #000 65%, transparent);
+  }
+  .refill-copy {
+    padding: 8px var(--gutter) 64px;
   }
   .hero-photo {
     justify-self: center;
@@ -844,6 +1125,19 @@ img.is-placeholder {
   }
 }
 @media (max-width: 560px) {
+  /* Sur mobile, la fenetre de composition monte depuis le bas de l'ecran. */
+  .composition-dialog {
+    border-radius: 16px 16px 0 0;
+    margin: auto 0 0;
+    max-height: 85vh;
+    max-width: 100%;
+  }
+  .composition-dialog[open] {
+    animation-name: sheet-in;
+  }
+  .composition-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .stats {
     gap: 16px;
     grid-template-columns: 1fr;
@@ -851,9 +1145,6 @@ img.is-placeholder {
   .stats div {
     border-left: 0;
     padding-left: 0;
-  }
-  .hero {
-    border-left-width: 4px;
   }
   .hero-actions .button {
     width: 100%;
@@ -867,6 +1158,7 @@ img.is-placeholder {
     scroll-behavior: auto;
   }
   * {
+    animation: none !important;
     transition: none !important;
   }
 }

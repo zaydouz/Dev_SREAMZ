@@ -6,6 +6,9 @@ import { stores, mapsUrl, mapsEmbedUrl } from "../data/stores";
 
 const PLACEHOLDER_IMAGE = "/favicon.svg";
 
+// Lien d'appel : uniquement le "+" et les chiffres (ex. tel:+27781231829).
+const telHref = (phone) => `tel:${phone.replace(/[^\d+]/g, "")}`;
+
 // Les textes du catalogue sont soit une chaine, soit un objet { fr, en }.
 const localize = (value, language) =>
   value && typeof value === "object" ? value[language] : value;
@@ -42,7 +45,7 @@ const heroMarkup = (content) => `
         <a class="button button-outline" href="#stores">${content.hero.secondary}</a>
       </div>
     </div>
-    <div class="hero-photo"><img src="/images/hero-streamz.jpg" alt="${content.hero.alt}" width="1193" height="1689" /></div>
+    <div class="hero-photo"><img src="/images/photo-hero-bottle.jpg" alt="${content.hero.alt}" width="1193" height="1689" /></div>
   </section>
   <section class="stats" aria-label="STREAMZ">${content.stats
     .map(
@@ -53,12 +56,11 @@ const heroMarkup = (content) => `
 
 // Bandeau #ChooseToRefill de l'accueil, comme la section #RefillRevolution d'Oasis.
 const refillBannerMarkup = (content) => `
-  <section class="refill-banner section-pad" aria-labelledby="refill-title">
-    <div>
+  <section class="refill-banner" aria-labelledby="refill-title">
+    <div class="refill-photo"><img src="/images/photo-woman-drinking.jpg" alt="${content.refillBanner.alt}" width="672" height="860" loading="lazy" /></div>
+    <div class="refill-copy">
       <p class="eyebrow">${content.refillBanner.eyebrow}</p>
       <h2 id="refill-title">${content.refillBanner.title.replace("#ChooseToRefill", "<span>#ChooseToRefill</span>")}</h2>
-    </div>
-    <div>
       ${content.refillBanner.paragraphs.map((text) => `<p>${text}</p>`).join("")}
       <div class="hero-actions">
         <a class="button button-light" href="#/products/refill">${content.refillBanner.cta}</a>
@@ -92,6 +94,7 @@ const productPageMarkup = (content, language, categorySlug, productSlug) => {
     return `<section class="section-pad not-found"><p>${content.productPage.notFound}</p><a class="button button-primary" href="#products">${content.productPage.back}</a></section>`;
   }
   const categoryTitle = localize(category.title, language);
+  const details = content.productPage.details[category.detailsType];
   const name = localize(product.name, language);
   return `
   <section class="product-page section-pad">
@@ -102,49 +105,114 @@ const productPageMarkup = (content, language, categorySlug, productSlug) => {
         <p class="eyebrow">${categoryTitle}</p>
         <h1 class="section-title">${name}</h1>
         <p class="product-sheet-text">${localize(product.text, language)}</p>
-        <h2>${content.productPage.composition}</h2>
-        <dl class="composition">${product.composition
-          .map(
-            ([label, value]) =>
-              `<div><dt>${localize(label, language)}</dt><dd${value === null ? ' class="is-pending"' : ""}>${value === null ? content.pending : localize(value, language)}</dd></div>`,
-          )
-          .join("")}</dl>
+        ${
+          category.products.length > 1
+            ? `<div class="variant-picker">
+          <p class="variant-label">${content.productPage.variants}</p>
+          <div class="variant-list">${category.products
+            .map(
+              (item) => `
+            <a class="variant" href="#/products/${category.slug}/${item.slug}"${item === product ? ' aria-current="page"' : ""}>
+              <span class="variant-image">${productImage(item.image, "")}</span>
+              <span class="variant-name">${localize(item.name, language)}</span>
+            </a>`,
+            )
+            .join("")}</div>
+        </div>`
+            : ""
+        }
+        <button class="button button-primary" type="button" data-dialog="composition-dialog">${details.button}</button>
       </div>
     </article>
-    ${
-      category.products.length > 1
-        ? `<div class="product-range">
-      <h2>${content.productPage.range}</h2>
-      <div class="range-list">${category.products
-        .map(
-          (item) => `
-        <a class="range-item" href="#/products/${category.slug}/${item.slug}"${item === product ? ' aria-current="page"' : ""}>
-          <div class="range-image">${productImage(item.image, localize(item.name, language))}</div>
-          <span>${localize(item.name, language)}</span>
-        </a>`,
-        )
-        .join("")}</div>
-    </div>`
-        : ""
-    }
+    <dialog class="composition-dialog" id="composition-dialog" aria-labelledby="composition-title">
+      <div class="composition-header">
+        <div>
+          <p class="eyebrow">${details.title}</p>
+          <h2 id="composition-title">${name}</h2>
+        </div>
+        <button class="composition-close" type="button" aria-label="${content.productPage.close}">&times;</button>
+      </div>
+      <dl class="composition-grid">${product.composition
+        .map(([label, value]) => {
+          const text =
+            value === null ? content.pending : localize(value, language);
+          // Les valeurs longues (texte) sont affichees plus petit que les chiffres.
+          const classes = [
+            value === null && "is-pending",
+            text.length > 12 && "is-text",
+          ]
+            .filter(Boolean)
+            .join(" ");
+          return `<div class="composition-tile"><dd${classes ? ` class="${classes}"` : ""}>${text}</dd><dt>${localize(label, language)}</dt></div>`;
+        })
+        .join("")}</dl>
+    </dialog>
   </section>`;
 };
 
 const aboutMarkup = (content) => `
-  <section class="about section-pad" id="about">
-    <div class="about-intro">
+  <section class="about" id="about">
+    <div class="about-text">
       ${sectionTitle(content.about.title)}
       <p>${content.about.story}</p>
-    </div>
-    <div class="commitment">
       <h2>${content.about.commitmentTitle}</h2>
       <p>${content.about.commitment}</p>
+      <div class="principles">${content.principles
+        .map(
+          ([title, text]) =>
+            `<article><h3>${title}</h3><p>${text}</p></article>`,
+        )
+        .join("")}</div>
     </div>
-    <div class="principles">${content.principles
+    <div class="about-photo"><img src="/images/photo-glass-pouring.jpg" alt="${content.about.photoAlt}" width="712" height="1280" loading="lazy" /></div>
+  </section>`;
+
+// Icones des etapes de purification (traits, couleur heritee).
+const PROCESS_ICONS = [
+  // Pre-chloration : pipette de dosage
+  '<path d="M14 3l7 7M16 5l-9 9-2 5 5-2 9-9"/><path d="M5 21h0"/>',
+  // Filtration : filtres
+  '<path d="M6 3h12M7 3v4l3 3v11h4V10l3-3V3"/><path d="M10 14h4"/>',
+  // Adoucissement : goutte et couches
+  '<path d="M12 3s5 5.5 5 9.5a5 5 0 0 1-10 0C7 8.5 12 3 12 3Z"/><path d="M4 21h16M6 18h12"/>',
+  // Osmose inverse : membrane
+  '<path d="M12 3v18"/><path d="M3 8c2 0 3-2 5-2M3 12h7M3 16c2 0 3 2 5 2"/><path d="M14 12h7m-3-3 3 3-3 3"/>',
+  // Desinfection UV : soleil
+  '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  // Equilibrage : balance
+  '<path d="M12 3v18M7 21h10M5 7h14"/><path d="m5 7-3 6a3 3 0 0 0 6 0L5 7ZM19 7l-3 6a3 3 0 0 0 6 0l-3-6Z"/>',
+  // Stockage et controle : bouclier valide
+  '<path d="M12 3 5 6v5c0 4.5 3 8.5 7 10 4-1.5 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/>',
+];
+
+const processMarkup = (content) => `
+  <section class="process section-pad" id="process">
+    <div class="section-heading">${sectionTitle(content.process.title)}<p>${content.process.description}</p></div>
+    <ol class="process-steps">${content.process.steps
       .map(
-        ([title, text]) => `<article><h3>${title}</h3><p>${text}</p></article>`,
+        ([title, text], index) => `
+      <li class="process-step">
+        <button class="process-card" type="button" aria-label="${title}. ${text}">
+          <span class="process-inner">
+            <span class="process-face process-front">
+              <span class="process-number">${String(index + 1).padStart(2, "0")}</span>
+              <svg class="process-icon" viewBox="0 0 24 24" aria-hidden="true">${PROCESS_ICONS[index]}</svg>
+              <span class="process-title">${title}</span>
+            </span>
+            <span class="process-face process-back"><span class="process-title">${title}</span>${text}</span>
+          </span>
+        </button>
+      </li>`,
       )
-      .join("")}</div>
+      .join("")}</ol>
+    <button class="text-link process-diagram-link" type="button" data-dialog="process-dialog">${content.process.diagram} <span aria-hidden="true">→</span></button>
+    <dialog class="composition-dialog process-dialog" id="process-dialog" aria-labelledby="process-dialog-title">
+      <div class="composition-header">
+        <h2 id="process-dialog-title">${content.process.diagramTitle}</h2>
+        <button class="composition-close" type="button" aria-label="${content.productPage.close}">&times;</button>
+      </div>
+      <div class="process-diagram"><img src="/images/diagram-water-treatment.png" alt="${content.process.diagramAlt}" width="1258" height="646" loading="lazy" /></div>
+    </dialog>
   </section>`;
 
 const servicesMarkup = (content) => `
@@ -170,17 +238,16 @@ const storesMarkup = (content) => {
         <ul class="store-list">${stores
           .map(
             (store, index) => `
-          <li class="store-card${index === 0 ? " is-selected" : ""}" data-store-id="${store.id}" data-search="${normalize([store.name, store.address, ...store.deliveryAreas].join(" "))}">
+          <li class="store-card${index === 0 ? " is-selected" : ""}" data-store-id="${store.id}" data-search="${normalize([store.name, store.address].join(" "))}">
             <button class="store-select" type="button" data-map="${mapsEmbedUrl(store)}"><h3>${store.name}</h3></button>
             <p>${store.address}</p>
             <ul class="store-services">${store.services.map((service) => `<li>${labels.serviceNames[service]}</li>`).join("")}</ul>
             <dl>
               <div><dt>${labels.hours}</dt><dd${store.hours ? "" : ' class="is-pending"'}>${store.hours ?? content.pending}</dd></div>
-              <div><dt>${labels.delivery}</dt><dd>${store.deliveryAreas.length ? store.deliveryAreas.join(", ") : labels.deliveryAreasPending}</dd></div>
             </dl>
             <div class="store-actions">
               <a class="button button-primary" href="${mapsUrl(store)}" target="_blank" rel="noopener noreferrer">${labels.directions}</a>
-              <a class="button button-outline" href="tel:${store.phone.replace(/\s/g, "")}">${labels.call} ${store.phone}</a>
+              <a class="button button-outline" href="${telHref(store.phone)}">${labels.call} ${store.phone}</a>
             </div>
           </li>`,
           )
@@ -201,7 +268,7 @@ const contactMarkup = (content) => `
     </div>
     <dl class="contact-details">
       <div><dt>${content.contact.emailLabel}</dt><dd><a href="mailto:${content.contact.email}">${content.contact.email}</a></dd></div>
-      <div><dt>${content.contact.phoneLabel}</dt><dd><a href="tel:${content.contact.phone.replace(/\s/g, "")}">${content.contact.phone}</a></dd></div>
+      <div><dt>${content.contact.phoneLabel}</dt><dd><a href="${telHref(content.contact.phone)}">${content.contact.phone}</a></dd></div>
       <div><dt>${content.contact.addressLabel}</dt><dd>${stores[0].address}</dd></div>
     </dl>
   </section>`;
@@ -212,7 +279,7 @@ const footerMarkup = (content) => `
     <nav aria-label="Footer">${navigation.map(({ key, href }) => `<a href="${href}">${content.navigation[key]}</a>`).join("")}</nav>
     <div class="footer-contact">
       <a href="mailto:${content.contact.email}">${content.contact.email}</a>
-      <a href="tel:${content.contact.phone.replace(/\s/g, "")}">${content.contact.phone}</a>
+      <a href="${telHref(content.contact.phone)}">${content.contact.phone}</a>
       <span>${stores[0].address}</span>
     </div>
     <small>© ${new Date().getFullYear()} ${content.company.name} · ${content.footer.registration} ${content.company.registration} · ${content.footer.vat} ${content.company.vat} · ${content.footer.rights}</small>
@@ -227,6 +294,7 @@ const pageMarkup = (content, language, route) =>
         refillBannerMarkup(content),
         categoriesMarkup(content, language),
         aboutMarkup(content),
+        processMarkup(content),
         servicesMarkup(content),
         storesMarkup(content),
         contactMarkup(content),
@@ -236,7 +304,7 @@ export function renderApp(root, content, language, route) {
   root.innerHTML = DOMPurify.sanitize(
     `${headerMarkup(content, route)}<main>${pageMarkup(content, language, route)}</main>${footerMarkup(content)}`,
     {
-      ADD_TAGS: ["iframe"],
+      ADD_TAGS: ["iframe", "dialog"],
       ADD_ATTR: ["target", "loading", "referrerpolicy"],
     },
   );
@@ -271,6 +339,28 @@ export function renderApp(root, content, language, route) {
       { once: true },
     );
   });
+
+  // Fenetres (composition, schema de traitement) : un bouton data-dialog="<id>"
+  // ouvre la fenetre ; la croix ou un clic sur le fond flou la ferme.
+  root.querySelectorAll("[data-dialog]").forEach((button) => {
+    const dialog = root.querySelector(`#${button.dataset.dialog}`);
+    button.addEventListener("click", () => dialog.showModal());
+  });
+  root.querySelectorAll("dialog").forEach((dialog) => {
+    dialog
+      .querySelector(".composition-close")
+      .addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+
+  // Cartes du processus : retournees au survol (CSS) ; sur ecran tactile, au toucher.
+  if (window.matchMedia("(hover: none)").matches) {
+    root.querySelectorAll(".process-card").forEach((card) => {
+      card.addEventListener("click", () => card.classList.toggle("is-flipped"));
+    });
+  }
 
   const locator = root.querySelector(".locator");
   if (locator) {

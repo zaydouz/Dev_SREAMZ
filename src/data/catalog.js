@@ -1,6 +1,7 @@
 // Catalogue commun aux deux langues : les images ne sont definies qu'une fois.
 // Les textes traduits sont des objets { fr, en }. Une valeur `null` dans une
 // composition s'affiche "A confirmer" en attendant la fiche complete du client.
+// `detailsType` choisit le libelle de la fenetre de details (voir content.js).
 
 // Analyse fournie par le client pour la bouteille de 500 ml.
 const waterAnalysis = [
@@ -63,7 +64,8 @@ const dispenserComposition = (specs) => [
 export const categories = [
   {
     slug: "water",
-    image: "/images/500ml_water.png",
+    detailsType: "composition",
+    image: "/images/water-500ml.png",
     title: { fr: "Eau purifiée", en: "Purified water" },
     tagline: { fr: "Notre produit phare", en: "Our flagship product" },
     description: {
@@ -74,21 +76,21 @@ export const categories = [
       {
         slug: "500ml",
         name: { fr: "Eau 500 ml", en: "Water 500 ml" },
-        image: "/images/500ml_water.png",
+        image: "/images/water-500ml.png",
         text: waterText,
         composition: waterComposition(waterAnalysis),
       },
       {
         slug: "1500ml",
         name: { fr: "Eau 1,5 L", en: "Water 1.5 L" },
-        image: "/images/1500ml_water.png",
+        image: "/images/water-1500ml.png",
         text: waterText,
         composition: waterComposition(pendingWaterAnalysis),
       },
       {
         slug: "5l",
         name: { fr: "Bidon d’eau 5 L", en: "Water 5 L" },
-        image: "/images/5l_water.png",
+        image: "/images/water-5l.png",
         text: waterText,
         composition: waterComposition(pendingWaterAnalysis),
       },
@@ -96,7 +98,8 @@ export const categories = [
   },
   {
     slug: "refill",
-    image: "/images/water_5l.png",
+    detailsType: "features",
+    image: "/images/refill-container-18-9l.png",
     title: { fr: "Recharge & contenants", en: "Refill & containers" },
     tagline: { fr: "Remplissez en magasin", en: "Refill in store" },
     description: {
@@ -107,7 +110,7 @@ export const categories = [
       {
         slug: "bottle-5l",
         name: { fr: "Bouteille vide 5 L", en: "Bottle 5 L clear" },
-        image: "/images/5l_water.png",
+        image: "/images/water-5l.png",
         text: {
           fr: "Bouteille transparente réutilisable de 5 L.",
           en: "Reusable 5 L clear bottle.",
@@ -127,7 +130,7 @@ export const categories = [
       {
         slug: "container-18-9l",
         name: { fr: "Bidon 18,9 L", en: "Water container 18.9 L" },
-        image: "/images/water_5l.png",
+        image: "/images/refill-container-18-9l.png",
         text: {
           fr: "Bidon de 18,9 L, compatible avec nos distributeurs.",
           en: "18.9 L container, compatible with our dispensers.",
@@ -174,7 +177,8 @@ export const categories = [
   },
   {
     slug: "juice",
-    image: "/images/orange_juice.png",
+    detailsType: "composition",
+    image: "/images/juice-orange.png",
     title: { fr: "Jus", en: "Juice range" },
     tagline: { fr: "De 250 ml à 5 L", en: "From 250 ml to 5 L" },
     description: {
@@ -185,7 +189,7 @@ export const categories = [
       {
         slug: "orange",
         name: { fr: "Jus d’orange", en: "Orange juice" },
-        image: "/images/orange_juice.png",
+        image: "/images/juice-orange.png",
         text: {
           fr: "Jus d’orange STREAMZ, préparé à base d’eau purifiée.",
           en: "STREAMZ orange juice, made with purified water.",
@@ -202,10 +206,27 @@ export const categories = [
       {
         slug: "mango",
         name: { fr: "Jus de mangue", en: "Mango juice" },
-        image: "/images/mango_juice.png",
+        image: "/images/juice-mango.png",
         text: {
           fr: "Jus de mangue STREAMZ, préparé à base d’eau purifiée.",
           en: "STREAMZ mango juice, made with purified water.",
+        },
+        composition: [
+          [
+            { fr: "Base", en: "Base" },
+            { fr: "Eau purifiée STREAMZ", en: "STREAMZ purified water" },
+          ],
+          [{ fr: "Ingrédients", en: "Ingredients" }, null],
+          [{ fr: "Formats", en: "Sizes" }, "250 ml – 5 L"],
+        ],
+      },
+      {
+        slug: "fruit-cocktail",
+        name: { fr: "Jus cocktail de fruits", en: "Fruit cocktail juice" },
+        image: "/images/juice-fruit-cocktail.png",
+        text: {
+          fr: "Jus cocktail de fruits STREAMZ, préparé à base d’eau purifiée.",
+          en: "STREAMZ fruit cocktail juice, made with purified water.",
         },
         composition: [
           [
@@ -220,7 +241,8 @@ export const categories = [
   },
   {
     slug: "dispensers",
-    image: "/images/Executive Hot and Cold Floorstanding.png",
+    detailsType: "specifications",
+    image: "/images/dispenser-executive.png",
     title: { fr: "Distributeurs d’eau", en: "Water dispensers" },
     tagline: { fr: "Maisons & bureaux", en: "Homes & offices" },
     description: {
@@ -234,7 +256,7 @@ export const categories = [
           fr: "Distributeur sur pied Executive, chaud et froid, sans contact",
           en: "Executive Hot and Cold Floorstanding Non-Touch Dispenser",
         },
-        image: "/images/Executive Hot and Cold Floorstanding.png",
+        image: "/images/dispenser-executive.png",
         text: {
           fr: "Compresseur silencieux, réservoirs en acier inoxydable alimentaire et pièces en ABS antibactérien.",
           en: "Low-noise compressor, food-grade stainless steel tanks and antibacterial ABS parts.",
@@ -256,7 +278,7 @@ export const categories = [
           fr: "Distributeur sur pied, chaud et froid, à poussoir",
           en: "Floor Standing Hot and Cold Dispenser – Push",
         },
-        image: "/images/Floor Standing Hot and Cold – Push.png",
+        image: "/images/dispenser-floorstanding-push.png",
         text: {
           fr: "Distributeur sur pied eau chaude et froide, à poussoir.",
           en: "Floor standing hot and cold water dispenser with push taps.",
@@ -269,7 +291,7 @@ export const categories = [
           fr: "Distributeur de comptoir, chaud et froid",
           en: "Desktop Hot and Cold Dispenser",
         },
-        image: "/images/Desktop Hot and Cold Dispenser.png",
+        image: "/images/dispenser-desktop.png",
         text: {
           fr: "Distributeur compact eau chaude et froide, à poser sur un comptoir.",
           en: "Compact hot and cold water dispenser for countertops.",
@@ -280,7 +302,8 @@ export const categories = [
   },
   {
     slug: "filtration",
-    image: "/images/filtration.png",
+    detailsType: "specifications",
+    image: "/images/filtration-system.png",
     title: { fr: "Filtration d’eau", en: "Water filtration" },
     tagline: { fr: "Sur demande", en: "On request" },
     description: {
@@ -291,7 +314,7 @@ export const categories = [
       {
         slug: "system",
         name: { fr: "Système de filtration", en: "Filtration system" },
-        image: "/images/filtration.png",
+        image: "/images/filtration-system.png",
         text: {
           fr: "Solution de traitement de l’eau sur mesure, étudiée selon votre installation.",
           en: "Tailored water treatment solution, designed around your installation.",
