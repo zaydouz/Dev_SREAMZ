@@ -11,16 +11,17 @@ export const navigation = [
 ];
 
 export const services = [
-  { key: "installation", href: "#contact" },
   { key: "refill", href: "#/products/refill" },
+  { key: "installation", href: "#contact" },
   { key: "customBottles", href: "#contact" },
-  { key: "packaging", href: "#contact" },
+  // Livraison pas encore lancee : affichee "Bientot disponible".
+  { key: "delivery", href: "#contact", soon: true },
 ];
 
 const shared = {
   contact: { email: "info@swsnrg.co.za", phone: "+27 (78) 123 1829" },
   company: {
-    name: "Water Street NRG",
+    name: "STREAMZ",
     registration: "2023 / 642357 / 07",
     vat: "4230314678",
   },
@@ -43,7 +44,7 @@ export const translations = {
     hero: {
       title: "Votre source fiable pour une eau pure et rafraîchissante",
       description:
-        "Chez Water Street NRG, nous offrons aux communautés un accès à une eau propre, pure et rafraîchissante, ainsi que des produits et services de qualité supérieure.",
+        "Chez STREAMZ, nous offrons aux communautés un accès à une eau propre, pure et rafraîchissante, ainsi que des produits et services de qualité supérieure.",
       cta: "Découvrir nos produits",
       secondary: "Trouver un magasin",
       alt: "Bouteille d’eau STREAMZ dans une éclaboussure d’eau",
@@ -96,7 +97,7 @@ export const translations = {
       photoAlt: "Eau versée dans un verre",
       commitmentTitle: "Notre engagement",
       commitment:
-        "Chez Water Street NRG, nous comprenons l’importance de l’eau comme élément fondamental de la vie. Notre engagement repose sur trois principes essentiels :",
+        "Chez STREAMZ, nous comprenons l’importance de l’eau comme élément fondamental de la vie. Notre engagement repose sur trois principes essentiels :",
     },
     principles: [
       [
@@ -148,28 +149,24 @@ export const translations = {
           "L’eau purifiée est stockée avant distribution, et sa qualité est contrôlée par des laboratoires accrédités selon la norme SANS 241.",
         ],
       ],
-      diagram: "Voir le schéma technique complet",
-      diagramTitle: "Schéma de traitement de l’eau",
-      diagramAlt:
-        "Schéma technique complet de l’installation de traitement de l’eau STREAMZ",
     },
-    serviceSection: { title: "Nos services" },
+    serviceSection: { title: "Nos services", soon: "Bientôt disponible" },
     services: {
-      installation: [
-        "Installation",
-        "Un service dédié installe nos produits. N’hésitez pas à nous consulter.",
+      delivery: [
+        "Livraison",
+        "Nous préparons la livraison de vos produits STREAMZ. Contactez-nous pour être informé de son lancement.",
       ],
       refill: [
         "Recharge en magasin",
         "Rapportez vos bouteilles et bidons pour les remplir d’eau purifiée STREAMZ.",
       ],
+      installation: [
+        "Installation & maintenance",
+        "Notre équipe installe et entretient vos distributeurs et systèmes de filtration.",
+      ],
       customBottles: [
         "Bouteilles personnalisées",
         "Des bouteilles à votre image pour vos anniversaires, mariages et événements d’entreprise.",
-      ],
-      packaging: [
-        "Matériaux d’emballage",
-        "Des produits en plastique sans BPA.",
       ],
     },
     stores: {
@@ -198,6 +195,28 @@ export const translations = {
       phoneLabel: "Téléphone",
       addressLabel: "Adresse",
       cta: "Nous écrire",
+      form: {
+        title: "Contactez-nous",
+        subtitle: "Écrivez à l’équipe STREAMZ, nous vous répondons rapidement.",
+        firstName: "Prénom",
+        lastName: "Nom",
+        company: "Entreprise",
+        role: "Fonction",
+        email: "E-mail",
+        message: "Votre message",
+        optional: "facultatif",
+        consent:
+          "J’accepte que STREAMZ utilise ces informations pour répondre à ma demande.",
+        submit: "Envoyer",
+        sending: "Envoi en cours…",
+        success:
+          "Merci, votre message a bien été envoyé. Nous vous répondons rapidement.",
+        error:
+          "L’envoi n’a pas fonctionné. Réessayez, ou écrivez-nous directement par e-mail.",
+        detailsTitle: "Coordonnées",
+        locationTitle: "Adresse",
+        emailSubject: "Nouveau message depuis le site STREAMZ",
+      },
     },
     footer: {
       tagline: "Quand pureté rime avec commodité.",
@@ -222,7 +241,7 @@ export const translations = {
     hero: {
       title: "Your Trusted Source for Pure, Refreshing Water",
       description:
-        "At Water Street NRG, we provide communities with access to clean, pure and refreshing water, with premium quality products and services.",
+        "At STREAMZ, we provide communities with access to clean, pure and refreshing water, with premium quality products and services.",
       cta: "Explore our products",
       secondary: "Find a store",
       alt: "STREAMZ water bottle in a water splash",
@@ -271,7 +290,7 @@ export const translations = {
       photoAlt: "Water being poured into a glass",
       commitmentTitle: "Our Commitment",
       commitment:
-        "At Water Street NRG, we understand the significance of water as a fundamental element of life. Our commitment is built on three core principles:",
+        "At STREAMZ, we understand the significance of water as a fundamental element of life. Our commitment is built on three core principles:",
     },
     principles: [
       [
@@ -321,26 +340,25 @@ export const translations = {
           "The purified water is stored before distribution, and its quality is checked by accredited laboratories against SANS 241.",
         ],
       ],
-      diagram: "View the full technical diagram",
-      diagramTitle: "Water treatment diagram",
-      diagramAlt:
-        "Full technical diagram of the STREAMZ water treatment installation",
     },
-    serviceSection: { title: "Our services" },
+    serviceSection: { title: "Our services", soon: "Coming soon" },
     services: {
-      installation: [
-        "Installation",
-        "A dedicated department installs our products, please ask us!",
+      delivery: [
+        "Delivery",
+        "We are preparing delivery of your STREAMZ products. Contact us to hear when it launches.",
       ],
       refill: [
         "In-store refill",
         "Bring back your bottles and containers to refill them with STREAMZ purified water.",
       ],
+      installation: [
+        "Installation & maintenance",
+        "Our team installs and services your water dispensers and filtration systems.",
+      ],
       customBottles: [
         "Personalised bottles",
         "Tailor-made bottles for birthdays, weddings and company events.",
       ],
-      packaging: ["Packaging materials", "BPA-free plastic products."],
     },
     stores: {
       title: "Our stores",
@@ -368,6 +386,28 @@ export const translations = {
       phoneLabel: "Phone",
       addressLabel: "Address",
       cta: "Email us",
+      form: {
+        title: "Contact us",
+        subtitle: "Get in touch with STREAMZ, we’ll get back to you quickly.",
+        firstName: "First name",
+        lastName: "Last name",
+        company: "Company",
+        role: "Role",
+        email: "Email",
+        message: "Your message",
+        optional: "optional",
+        consent:
+          "I agree that STREAMZ may use this information to respond to my enquiry.",
+        submit: "Submit",
+        sending: "Sending…",
+        success:
+          "Thank you, your message has been sent. We’ll get back to you soon.",
+        error:
+          "Your message could not be sent. Please try again, or email us directly.",
+        detailsTitle: "Contact details",
+        locationTitle: "Location",
+        emailSubject: "New message from the STREAMZ website",
+      },
     },
     footer: {
       tagline: "Where Purity Meets Convenience.",

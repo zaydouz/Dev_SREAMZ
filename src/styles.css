@@ -251,11 +251,10 @@ img.is-placeholder {
   position: absolute;
   z-index: -1;
 }
-.hero-logo {
-  display: block;
-  height: auto;
-  margin-bottom: clamp(32px, 4vw, 48px);
-  width: min(460px, 100%);
+/* Le texte est cale vers le haut plutot que centre sur la photo. */
+.hero-copy {
+  align-self: start;
+  margin-top: clamp(16px, 4vw, 64px);
 }
 .hero h1 {
   color: var(--blue);
@@ -692,12 +691,54 @@ html:has(.composition-dialog[open]) {
 }
 
 /* ---------- Processus de purification ---------- */
+/* Fond sombre immersif : photo du systeme de filtration floutee sous un voile
+   bleu fonce (le flou masque aussi la basse resolution de la photo). */
+.process {
+  /* Hauteur du degrade qui part du gris de la section "A propos". */
+  --process-fade: clamp(28px, 3vw, 40px);
+  background: var(--grey-light);
+  color: var(--white);
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: calc(clamp(64px, 9vw, 110px) + var(--process-fade));
+  position: relative;
+}
+.process::before {
+  background:
+    linear-gradient(rgba(11, 58, 99, 0.8), rgba(11, 58, 99, 0.8)),
+    url("/images/photo-filtration-counter.jpg") center 60% / cover no-repeat;
+  content: "";
+  filter: blur(3px);
+  inset: -12px;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 12px,
+    rgba(0, 0, 0, 0.25) calc(var(--process-fade) * 0.35 + 12px),
+    rgba(0, 0, 0, 0.7) calc(var(--process-fade) * 0.7 + 12px),
+    #000 calc(var(--process-fade) + 12px)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 12px,
+    rgba(0, 0, 0, 0.25) calc(var(--process-fade) * 0.35 + 12px),
+    rgba(0, 0, 0, 0.7) calc(var(--process-fade) * 0.7 + 12px),
+    #000 calc(var(--process-fade) + 12px)
+  );
+  position: absolute;
+  z-index: -1;
+}
+.process .section-title::after {
+  background: var(--cyan);
+}
+.process .section-heading p {
+  color: rgba(255, 255, 255, 0.8);
+}
 .process-steps {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   list-style: none;
-  margin: 0 0 32px;
+  margin: 0;
   padding: 0;
 }
 .process-step {
@@ -741,13 +782,14 @@ html:has(.composition-dialog[open]) {
   padding: 24px 20px;
 }
 .process-front {
-  background: var(--grey-light);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   justify-content: flex-end;
   position: relative;
 }
 .process-back {
-  background: var(--blue);
-  color: var(--white);
+  background: var(--white);
+  color: var(--muted);
   font-size: 14px;
   font-weight: 300;
   justify-content: center;
@@ -755,7 +797,7 @@ html:has(.composition-dialog[open]) {
   transform: rotateY(180deg);
 }
 .process-number {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -764,7 +806,7 @@ html:has(.composition-dialog[open]) {
   top: 18px;
 }
 .process-icon {
-  color: var(--blue);
+  color: var(--cyan);
   fill: none;
   height: 40px;
   margin-bottom: auto;
@@ -775,7 +817,7 @@ html:has(.composition-dialog[open]) {
   width: 40px;
 }
 .process-title {
-  color: var(--blue);
+  color: var(--white);
   display: block;
   font-size: 18px;
   font-weight: 900;
@@ -783,28 +825,9 @@ html:has(.composition-dialog[open]) {
   margin-top: 24px;
 }
 .process-back .process-title {
-  color: var(--cyan);
+  color: var(--blue);
   font-size: 15px;
   margin: 0 0 8px;
-}
-.process-diagram-link {
-  background: none;
-  border: 0;
-  cursor: pointer;
-  font: 800 16px var(--font);
-  padding: 0;
-}
-/* Le schema technique s'affiche dans une fenetre plus large. */
-.process-dialog {
-  max-width: min(1100px, calc(100% - 32px));
-}
-.process-diagram {
-  overflow-x: auto;
-}
-.process-diagram img {
-  display: block;
-  min-width: 720px;
-  width: 100%;
 }
 
 /* ---------- Services ---------- */
@@ -829,6 +852,17 @@ html:has(.composition-dialog[open]) {
   color: var(--blue);
   font-size: 19px;
   margin-bottom: 10px;
+}
+.service-badge {
+  background: var(--blue);
+  border-radius: 999px;
+  color: var(--white);
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 8px;
+  padding: 2px 10px;
+  width: fit-content;
 }
 .service p {
   color: var(--muted);
@@ -994,6 +1028,110 @@ html:has(.composition-dialog[open]) {
   margin: 0;
 }
 
+/* ---------- Fenetre de contact ---------- */
+.contact-dialog {
+  max-width: min(920px, calc(100% - 32px));
+}
+.contact-dialog-subtitle {
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+.contact-dialog-body {
+  display: grid;
+  gap: clamp(24px, 4vw, 48px);
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+}
+.contact-form {
+  display: grid;
+  gap: 16px;
+}
+.form-row {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+}
+.form-field span {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.form-field small {
+  color: var(--muted);
+  font-weight: 400;
+}
+.form-field input,
+.form-field textarea {
+  border: 1px solid var(--grey);
+  border-radius: var(--radius);
+  font: 400 16px var(--font);
+  padding: 12px 14px;
+  width: 100%;
+}
+.form-field textarea {
+  resize: vertical;
+}
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--blue);
+  outline: none;
+}
+/* Champ anti-spam invisible pour les visiteurs (rempli seulement par les robots). */
+.form-honeypot {
+  left: -9999px;
+  position: absolute;
+}
+.form-consent {
+  align-items: start;
+  color: var(--muted);
+  display: flex;
+  font-size: 14px;
+  gap: 10px;
+}
+.form-consent input {
+  accent-color: var(--blue);
+  margin-top: 4px;
+}
+.contact-form .button {
+  justify-self: start;
+}
+.contact-form .button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+.form-status {
+  background: var(--grey-light);
+  border-radius: var(--radius);
+  color: var(--blue);
+  font-weight: 500;
+  margin: 0;
+  padding: 12px 14px;
+}
+.form-status.is-error {
+  color: #b42318;
+}
+.contact-dialog-aside {
+  background: var(--grey-light);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.contact-dialog-aside h3 {
+  color: var(--blue);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.contact-dialog-aside p {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+.contact-dialog-aside p:last-child {
+  margin-bottom: 0;
+}
+.contact-dialog-aside a:hover {
+  color: var(--blue);
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
   background: var(--grey);
@@ -1058,6 +1196,9 @@ html:has(.composition-dialog[open]) {
   }
 }
 @media (max-width: 900px) {
+  .contact-dialog-body {
+    grid-template-columns: 1fr;
+  }
   .principles {
     grid-template-columns: 1fr;
   }
@@ -1125,6 +1266,9 @@ html:has(.composition-dialog[open]) {
   }
 }
 @media (max-width: 560px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
   /* Sur mobile, la fenetre de composition monte depuis le bas de l'ecran. */
   .composition-dialog {
     border-radius: 16px 16px 0 0;

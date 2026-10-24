@@ -53,7 +53,7 @@ const dispenserComposition = (specs) => [
       en: "Water coolers / Dispensers",
     },
   ],
-  [{ fr: "Marque", en: "Brand" }, "Classic / Water Street NRG"],
+  [{ fr: "Marque", en: "Brand" }, "Classic / STREAMZ"],
   [{ fr: "Chauffage", en: "Heating" }, specs.heating ?? null],
   [{ fr: "Refroidissement", en: "Cooling" }, specs.cooling ?? null],
   [{ fr: "Réfrigérant", en: "Refrigerant" }, specs.refrigerant ?? null],
@@ -94,6 +94,13 @@ export const categories = [
         text: waterText,
         composition: waterComposition(pendingWaterAnalysis),
       },
+      {
+        slug: "10l",
+        name: { fr: "Bidon d’eau 10 L", en: "Water 10 L" },
+        image: "/images/water-10l.png",
+        text: waterText,
+        composition: waterComposition(pendingWaterAnalysis),
+      },
     ],
   },
   {
@@ -108,36 +115,6 @@ export const categories = [
     },
     products: [
       {
-        slug: "bottle-5l",
-        name: { fr: "Bouteille vide 5 L", en: "Bottle 5 L clear" },
-        image: "/images/water-5l.png",
-        text: {
-          fr: "Bouteille transparente réutilisable de 5 L.",
-          en: "Reusable 5 L clear bottle.",
-        },
-        composition: containerComposition("5 L"),
-      },
-      {
-        slug: "bottle-10l",
-        name: { fr: "Bouteille vide 10 L", en: "Bottle 10 L clear" },
-        image: "",
-        text: {
-          fr: "Bouteille transparente réutilisable de 10 L.",
-          en: "Reusable 10 L clear bottle.",
-        },
-        composition: containerComposition("10 L"),
-      },
-      {
-        slug: "container-18-9l",
-        name: { fr: "Bidon 18,9 L", en: "Water container 18.9 L" },
-        image: "/images/refill-container-18-9l.png",
-        text: {
-          fr: "Bidon de 18,9 L, compatible avec nos distributeurs.",
-          en: "18.9 L container, compatible with our dispensers.",
-        },
-        composition: containerComposition("18,9 L"),
-      },
-      {
         slug: "container-10l-handles",
         name: {
           fr: "Bidon 10 L avec poignées",
@@ -151,12 +128,42 @@ export const categories = [
         composition: containerComposition("10 L"),
       },
       {
+        slug: "container-15l",
+        name: { fr: "Bidon 15 L", en: "Water container 15 L" },
+        image: "",
+        text: {
+          fr: "Bidon réutilisable de 15 L, à remplir dans nos magasins.",
+          en: "Reusable 15 L container, to refill in our stores.",
+        },
+        composition: containerComposition("15 L"),
+      },
+      {
+        slug: "container-18-9l",
+        name: { fr: "Bidon 18,9 L", en: "Water container 18.9 L" },
+        image: "/images/refill-container-18-9l.png",
+        text: {
+          fr: "Bidon de 18,9 L, compatible avec nos distributeurs.",
+          en: "18.9 L container, compatible with our dispensers.",
+        },
+        composition: containerComposition("18,9 L"),
+      },
+      {
+        slug: "container-20l",
+        name: { fr: "Bidon 20 L", en: "Water container 20 L" },
+        image: "",
+        text: {
+          fr: "Bidon réutilisable de 20 L, à remplir dans nos magasins.",
+          en: "Reusable 20 L container, to refill in our stores.",
+        },
+        composition: containerComposition("20 L"),
+      },
+      {
         slug: "container-25l-tap",
         name: {
           fr: "Bidon carré 25 L avec robinet",
           en: "Container 25 L square with tap",
         },
-        image: "",
+        image: "/images/25l-refill.png",
         text: {
           fr: "Bidon carré de 25 L, livré avec robinet.",
           en: "25 L square container, supplied with a tap.",
