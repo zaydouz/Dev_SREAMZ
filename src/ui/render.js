@@ -28,7 +28,7 @@ const headerMarkup = (content, route) => `
     <nav id="main-navigation" aria-label="Navigation">${navigation
       .map(
         ({ key, href }) =>
-          `<a href="${href}"${key === "products" && route.page === "category" ? ' aria-current="page"' : ""}>${content.navigation[key]}</a>`,
+          `<a href="${href}"${key === "contact" ? ' data-dialog="contact-dialog"' : ""}${key === "products" && route.page === "category" ? ' aria-current="page"' : ""}>${content.navigation[key]}</a>`,
       )
       .join("")}</nav>
     <button class="language-switch" type="button">${content.languageName}</button>
@@ -37,7 +37,6 @@ const headerMarkup = (content, route) => `
 const heroMarkup = (content) => `
   <section class="hero" id="home" aria-labelledby="hero-title">
     <div class="hero-copy">
-      <img class="hero-logo" src="${logoUrl}" alt="STREAMZ – Water for life and living." width="460" height="88" />
       <h1 id="hero-title">${content.hero.title}</h1>
       <p class="hero-text">${content.hero.description}</p>
       <div class="hero-actions">
@@ -205,23 +204,18 @@ const processMarkup = (content) => `
       </li>`,
       )
       .join("")}</ol>
-    <button class="text-link process-diagram-link" type="button" data-dialog="process-dialog">${content.process.diagram} <span aria-hidden="true">→</span></button>
-    <dialog class="composition-dialog process-dialog" id="process-dialog" aria-labelledby="process-dialog-title">
-      <div class="composition-header">
-        <h2 id="process-dialog-title">${content.process.diagramTitle}</h2>
-        <button class="composition-close" type="button" aria-label="${content.productPage.close}">&times;</button>
-      </div>
-      <div class="process-diagram"><img src="/images/diagram-water-treatment.png" alt="${content.process.diagramAlt}" width="1258" height="646" loading="lazy" /></div>
-    </dialog>
   </section>`;
 
 const servicesMarkup = (content) => `
   <section class="services section-pad" id="services">
     <div class="section-heading">${sectionTitle(content.serviceSection.title)}</div>
     <div class="service-grid">${services
-      .map(({ key, href }) => {
+      .map(({ key, href, soon }) => {
         const [title, text] = content.services[key];
-        return `<a class="service" href="${href}"><h3>${title}</h3><p>${text}</p><span class="category-link" aria-hidden="true">→</span></a>`;
+        const badge = soon
+          ? `<span class="service-badge">${content.serviceSection.soon}</span>`
+          : "";
+        return `<a class="service" href="${href}"><h3>${title}${badge}</h3><p>${text}</p><span class="category-link" aria-hidden="true">→</span></a>`;
       })
       .join("")}</div>
   </section>`;
@@ -264,7 +258,7 @@ const contactMarkup = (content) => `
     <div>
       ${sectionTitle(content.contact.title)}
       <p>${content.contact.description}</p>
-      <a class="button button-light" href="mailto:${content.contact.email}">${content.contact.cta}</a>
+      <button class="button button-light" type="button" data-dialog="contact-dialog">${content.contact.cta}</button>
     </div>
     <dl class="contact-details">
       <div><dt>${content.contact.emailLabel}</dt><dd><a href="mailto:${content.contact.email}">${content.contact.email}</a></dd></div>
@@ -276,7 +270,7 @@ const contactMarkup = (content) => `
 const footerMarkup = (content) => `
   <footer class="site-footer">
     <div class="footer-brand"><img src="${logoUrl}" alt="STREAMZ" width="200" height="38" loading="lazy" /><p>${content.footer.tagline}</p></div>
-    <nav aria-label="Footer">${navigation.map(({ key, href }) => `<a href="${href}">${content.navigation[key]}</a>`).join("")}</nav>
+    <nav aria-label="Footer">${navigation.map(({ key, href }) => `<a href="${href}"${key === "contact" ? ' data-dialog="contact-dialog"' : ""}>${content.navigation[key]}</a>`).join("")}</nav>
     <div class="footer-contact">
       <a href="mailto:${content.contact.email}">${content.contact.email}</a>
       <a href="${telHref(content.contact.phone)}">${content.contact.phone}</a>
@@ -284,6 +278,112 @@ const footerMarkup = (content) => `
     </div>
     <small>© ${new Date().getFullYear()} ${content.company.name} · ${content.footer.registration} ${content.company.registration} · ${content.footer.vat} ${content.company.vat} · ${content.footer.rights}</small>
   </footer>`;
+
+// Formulaire de contact, dans une fenetre ouverte par le lien "Contact" du menu et
+// le bouton de la section Contact. L'envoi passe par Web3Forms, qui transmet le
+// message par e-mail a info@swsnrg.co.za (cle dans VITE_WEB3FORMS_ACCESS_KEY).
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? "";
+
+const contactDialogMarkup = (content) => {
+  const form = content.contact.form;
+  const field = (
+    name,
+    label,
+    type = "text",
+    { required = true, autocomplete = "" } = {},
+  ) => `
+        <label class="form-field">
+          <span>${label}${required ? "" : ` <small>(${form.optional})</small>`}</span>
+          <input type="${type}" name="${name}"${required ? " required" : ""}${autocomplete ? ` autocomplete="${autocomplete}"` : ""} />
+        </label>`;
+  return `
+  <dialog class="composition-dialog contact-dialog" id="contact-dialog" aria-labelledby="contact-dialog-title">
+    <div class="composition-header">
+      <div>
+        <h2 id="contact-dialog-title">${form.title}</h2>
+        <p class="contact-dialog-subtitle">${form.subtitle}</p>
+      </div>
+      <button class="composition-close" type="button" aria-label="${content.productPage.close}">&times;</button>
+    </div>
+    <div class="contact-dialog-body">
+      <form class="contact-form">
+        <div class="form-row">${field("first_name", form.firstName, "text", { autocomplete: "given-name" })}${field("last_name", form.lastName, "text", { autocomplete: "family-name" })}</div>
+        <div class="form-row">${field("company", form.company, "text", { required: false, autocomplete: "organization" })}${field("job_title", form.role, "text", { required: false, autocomplete: "organization-title" })}</div>
+        ${field("email", form.email, "email", { autocomplete: "email" })}
+        <label class="form-field">
+          <span>${form.message}</span>
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <input class="form-honeypot" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="form-consent"><input type="checkbox" name="consent" required /><span>${form.consent}</span></label>
+        <button class="button button-primary" type="submit">${form.submit} <span aria-hidden="true">→</span></button>
+        <p class="form-status" role="status" hidden></p>
+      </form>
+      <aside class="contact-dialog-aside">
+        <h3>${form.detailsTitle}</h3>
+        <p><a href="mailto:${content.contact.email}">${content.contact.email}</a><br /><a href="${telHref(content.contact.phone)}">${content.contact.phone}</a></p>
+        <h3>${form.locationTitle}</h3>
+        <p>${stores[0].address}</p>
+      </aside>
+    </div>
+  </dialog>`;
+};
+
+function setupContactForm(root, content) {
+  const form = root.querySelector(".contact-form");
+  const status = form.querySelector(".form-status");
+  const submit = form.querySelector('button[type="submit"]');
+  const labels = content.contact.form;
+  const showStatus = (text, isError) => {
+    status.textContent = text;
+    status.classList.toggle("is-error", isError);
+    status.hidden = false;
+  };
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    if (data.botcheck) return;
+    submit.disabled = true;
+    submit.textContent = labels.sending;
+    status.hidden = true;
+    try {
+      if (!WEB3FORMS_ACCESS_KEY) throw new Error("Cle Web3Forms manquante");
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `${labels.emailSubject} – ${data.first_name} ${data.last_name}`,
+          from_name: "Site STREAMZ",
+          // "email" sert d'adresse de reponse : "Repondre" ecrit directement au visiteur.
+          email: data.email,
+          [labels.firstName]: data.first_name,
+          [labels.lastName]: data.last_name,
+          [labels.company]: data.company || "—",
+          [labels.role]: data.job_title || "—",
+          [labels.message]: data.message,
+        }),
+      });
+      const result = await response.json();
+      if (!result.success) throw new Error(result.message);
+      form.reset();
+      showStatus(labels.success, false);
+    } catch (error) {
+      console.error(error);
+      showStatus(labels.error, true);
+    } finally {
+      submit.disabled = false;
+      submit.innerHTML = `${labels.submit} <span aria-hidden="true">→</span>`;
+    }
+  });
+  // A la fermeture, on efface le message de confirmation ou d'erreur.
+  form.closest("dialog").addEventListener("close", () => {
+    status.hidden = true;
+  });
+}
 
 // Tout le site tient sur l'accueil ; seules les fiches produit ont leur propre vue.
 const pageMarkup = (content, language, route) =>
@@ -302,7 +402,7 @@ const pageMarkup = (content, language, route) =>
 
 export function renderApp(root, content, language, route) {
   root.innerHTML = DOMPurify.sanitize(
-    `${headerMarkup(content, route)}<main>${pageMarkup(content, language, route)}</main>${footerMarkup(content)}`,
+    `${headerMarkup(content, route)}<main>${pageMarkup(content, language, route)}</main>${footerMarkup(content)}${contactDialogMarkup(content)}`,
     {
       ADD_TAGS: ["iframe", "dialog"],
       ADD_ATTR: ["target", "loading", "referrerpolicy"],
@@ -340,12 +440,16 @@ export function renderApp(root, content, language, route) {
     );
   });
 
-  // Fenetres (composition, schema de traitement) : un bouton data-dialog="<id>"
+  // Fenetres (composition, contact) : un bouton ou lien data-dialog="<id>"
   // ouvre la fenetre ; la croix ou un clic sur le fond flou la ferme.
-  root.querySelectorAll("[data-dialog]").forEach((button) => {
-    const dialog = root.querySelector(`#${button.dataset.dialog}`);
-    button.addEventListener("click", () => dialog.showModal());
+  root.querySelectorAll("[data-dialog]").forEach((trigger) => {
+    const dialog = root.querySelector(`#${trigger.dataset.dialog}`);
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      dialog.showModal();
+    });
   });
+  setupContactForm(root, content);
   root.querySelectorAll("dialog").forEach((dialog) => {
     dialog
       .querySelector(".composition-close")
