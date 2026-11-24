@@ -4,6 +4,7 @@
 // `detailsType` choisit le libelle de la fenetre de details (voir content.js).
 
 // Analyse fournie par le client pour la bouteille de 500 ml.
+// Les autres formats ont une composition vide, qui masque le bouton de details.
 const waterAnalysis = [
   [{ fr: "Calcium (Ca)", en: "Calcium (Ca)" }, "< 0.86"],
   [{ fr: "Magnésium (Mg)", en: "Magnesium (Mg)" }, "< 0.13"],
@@ -19,9 +20,6 @@ const waterAnalysis = [
   [{ fr: "Résidu sec (TDS)", en: "TDS" }, "66.7"],
   [{ fr: "pH", en: "pH" }, "6-8"],
 ];
-
-// Memes lignes, valeurs "A confirmer", pour les formats sans analyse fournie.
-const pendingWaterAnalysis = waterAnalysis.map(([label]) => [label, null]);
 
 const waterComposition = (analysis) => [
   [
@@ -45,21 +43,23 @@ const containerComposition = (capacity) => [
   ],
 ];
 
-const dispenserComposition = (specs) => [
+// Les caracteristiques non fournies par le client ne sont pas affichees.
+const dispenserComposition = (specs) =>
   [
-    { fr: "Catégorie", en: "Category" },
-    {
-      fr: "Refroidisseurs / Distributeurs d’eau",
-      en: "Water coolers / Dispensers",
-    },
-  ],
-  [{ fr: "Marque", en: "Brand" }, "Classic / STREAMZ"],
-  [{ fr: "Chauffage", en: "Heating" }, specs.heating ?? null],
-  [{ fr: "Refroidissement", en: "Cooling" }, specs.cooling ?? null],
-  [{ fr: "Réfrigérant", en: "Refrigerant" }, specs.refrigerant ?? null],
-  [{ fr: "Tension", en: "Voltage" }, specs.voltage ?? null],
-  [{ fr: "Dimensions", en: "Dimensions" }, specs.dimensions ?? null],
-];
+    [
+      { fr: "Catégorie", en: "Category" },
+      {
+        fr: "Refroidisseurs / Distributeurs d’eau",
+        en: "Water coolers / Dispensers",
+      },
+    ],
+    [{ fr: "Marque", en: "Brand" }, "Classic / STREAMZ"],
+    [{ fr: "Chauffage", en: "Heating" }, specs.heating ?? null],
+    [{ fr: "Refroidissement", en: "Cooling" }, specs.cooling ?? null],
+    [{ fr: "Réfrigérant", en: "Refrigerant" }, specs.refrigerant ?? null],
+    [{ fr: "Tension", en: "Voltage" }, specs.voltage ?? null],
+    [{ fr: "Dimensions", en: "Dimensions" }, specs.dimensions ?? null],
+  ].filter(([, value]) => value !== null);
 
 // Osmoseurs : seuls le nom et la photo sont connus. Une composition vide masque le
 // bouton de details en attendant les caracteristiques du client.
@@ -92,21 +92,21 @@ export const categories = [
         name: { fr: "Eau 1,5 L", en: "Water 1.5 L" },
         image: "/images/water-1500ml.png",
         text: waterText,
-        composition: waterComposition(pendingWaterAnalysis),
+        composition: [],
       },
       {
         slug: "5l",
         name: { fr: "Bidon d’eau 5 L", en: "Water 5 L" },
         image: "/images/water-5l.png",
         text: waterText,
-        composition: waterComposition(pendingWaterAnalysis),
+        composition: [],
       },
       {
         slug: "10l",
         name: { fr: "Bidon d’eau 10 L", en: "Water 10 L" },
         image: "/images/water-10l.png",
         text: waterText,
-        composition: waterComposition(pendingWaterAnalysis),
+        composition: [],
       },
     ],
   },
@@ -203,7 +203,6 @@ export const categories = [
             { fr: "Base", en: "Base" },
             { fr: "Eau purifiée STREAMZ", en: "STREAMZ purified water" },
           ],
-          [{ fr: "Ingrédients", en: "Ingredients" }, null],
           [{ fr: "Formats", en: "Sizes" }, "250 ml, 330 ml, 500 ml"],
         ],
       },
@@ -220,7 +219,6 @@ export const categories = [
             { fr: "Base", en: "Base" },
             { fr: "Eau purifiée STREAMZ", en: "STREAMZ purified water" },
           ],
-          [{ fr: "Ingrédients", en: "Ingredients" }, null],
           [{ fr: "Formats", en: "Sizes" }, "250 ml, 330 ml, 500 ml"],
         ],
       },
@@ -237,7 +235,6 @@ export const categories = [
             { fr: "Base", en: "Base" },
             { fr: "Eau purifiée STREAMZ", en: "STREAMZ purified water" },
           ],
-          [{ fr: "Ingrédients", en: "Ingredients" }, null],
           [{ fr: "Formats", en: "Sizes" }, "250 ml, 330 ml, 500 ml"],
         ],
       },

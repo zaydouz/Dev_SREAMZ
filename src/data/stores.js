@@ -10,7 +10,10 @@ export const stores = [
     mapsName: "STREAMZ WATER",
     address: "Shop 20, 757 Victoria Ave, Little Falls, Roodepoort, 1735",
     phone: "+27 (78) 123 1829",
-    hours: null,
+    hours: {
+      fr: ["Du lundi au samedi : 9 h – 19 h", "Dimanche : 8 h – 17 h"],
+      en: ["Monday to Saturday: 9:00 – 19:00", "Sunday: 8:00 – 17:00"],
+    },
     services: ["shop", "refill", "installation"],
     gallery: [
       "/images/store-roodepoort-front.jpg",

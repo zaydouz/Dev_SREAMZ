@@ -220,7 +220,7 @@ const servicesMarkup = (content) => `
       .join("")}</div>
   </section>`;
 
-const storesMarkup = (content) => {
+const storesMarkup = (content, language) => {
   const labels = content.stores;
   return `
   <section class="stores section-pad" id="stores">
@@ -237,7 +237,7 @@ const storesMarkup = (content) => {
             <p>${store.address}, ${content.country}</p>
             <ul class="store-services">${store.services.map((service) => `<li>${labels.serviceNames[service]}</li>`).join("")}</ul>
             <dl>
-              <div><dt>${labels.hours}</dt><dd${store.hours ? "" : ' class="is-pending"'}>${store.hours ?? content.pending}</dd></div>
+              <div><dt>${labels.hours}</dt><dd${store.hours ? "" : ' class="is-pending"'}>${store.hours ? store.hours[language].join("<br />") : content.pending}</dd></div>
             </dl>
             <div class="store-actions">
               <a class="button button-primary" href="${mapsUrl(store)}" target="_blank" rel="noopener noreferrer">${labels.directions}</a>
@@ -413,7 +413,7 @@ const pageMarkup = (content, language, route) =>
         aboutMarkup(content),
         processMarkup(content),
         servicesMarkup(content),
-        storesMarkup(content),
+        storesMarkup(content, language),
         contactMarkup(content),
       ].join("");
 
