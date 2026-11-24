@@ -31,6 +31,7 @@ export const translations = {
   fr: {
     ...shared,
     languageName: "English",
+    country: "Afrique du Sud",
     documentTitle: "Votre source fiable pour une eau pure et rafraîchissante",
     navigation: {
       products: "Nos produits",
@@ -177,7 +178,8 @@ export const translations = {
       count: (n) => `${n} magasin${n > 1 ? "s" : ""}`,
       noResult:
         "Aucun magasin trouvé pour cette recherche. Contactez-nous, nous vous orienterons.",
-      directions: "Itinéraire",
+      directions: "Localisation",
+      gallery: "Galerie",
       call: "Appeler",
       hours: "Horaires",
       serviceNames: {
@@ -228,6 +230,7 @@ export const translations = {
   en: {
     ...shared,
     languageName: "Français",
+    country: "South Africa",
     documentTitle: "Your Trusted Source for Pure, Refreshing Water",
     navigation: {
       products: "Our products",
@@ -368,7 +371,8 @@ export const translations = {
       count: (n) => `${n} store${n > 1 ? "s" : ""}`,
       noResult:
         "No store found for this search. Contact us and we’ll point you in the right direction.",
-      directions: "Directions",
+      directions: "Location",
+      gallery: "Gallery",
       call: "Call",
       hours: "Trading hours",
       serviceNames: {

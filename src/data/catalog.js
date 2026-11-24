@@ -61,6 +61,13 @@ const dispenserComposition = (specs) => [
   [{ fr: "Dimensions", en: "Dimensions" }, specs.dimensions ?? null],
 ];
 
+// Osmoseurs : seuls le nom et la photo sont connus. Une composition vide masque le
+// bouton de details en attendant les caracteristiques du client.
+const filtrationText = {
+  fr: "Système de purification de l’eau par osmose inverse.",
+  en: "Reverse osmosis water purification system.",
+};
+
 export const categories = [
   {
     slug: "water",
@@ -120,22 +127,12 @@ export const categories = [
           fr: "Bidon 10 L avec poignées",
           en: "Water container 10 L with handles",
         },
-        image: "",
+        image: "/images/refill-container-blue-tap.png",
         text: {
           fr: "Bidon de 10 L avec poignées, facile à transporter.",
           en: "10 L container with handles, easy to carry.",
         },
         composition: containerComposition("10 L"),
-      },
-      {
-        slug: "container-15l",
-        name: { fr: "Bidon 15 L", en: "Water container 15 L" },
-        image: "",
-        text: {
-          fr: "Bidon réutilisable de 15 L, à remplir dans nos magasins.",
-          en: "Reusable 15 L container, to refill in our stores.",
-        },
-        composition: containerComposition("15 L"),
       },
       {
         slug: "container-18-9l",
@@ -150,12 +147,22 @@ export const categories = [
       {
         slug: "container-20l",
         name: { fr: "Bidon 20 L", en: "Water container 20 L" },
-        image: "",
+        image: "/images/refill-container-blue-tap.png",
         text: {
           fr: "Bidon réutilisable de 20 L, à remplir dans nos magasins.",
           en: "Reusable 20 L container, to refill in our stores.",
         },
         composition: containerComposition("20 L"),
+      },
+      {
+        slug: "container-25l",
+        name: { fr: "Bidon 25 L", en: "Water container 25 L" },
+        image: "/images/refill-container-blue-tap.png",
+        text: {
+          fr: "Bidon réutilisable de 25 L, à remplir dans nos magasins.",
+          en: "Reusable 25 L container, to refill in our stores.",
+        },
+        composition: containerComposition("25 L"),
       },
       {
         slug: "container-25l-tap",
@@ -170,27 +177,17 @@ export const categories = [
         },
         composition: containerComposition("25 L"),
       },
-      {
-        slug: "tap",
-        name: { fr: "Robinet pour bidon", en: "Tap for container" },
-        image: "",
-        text: {
-          fr: "Robinet de remplacement pour nos bidons.",
-          en: "Replacement tap for our containers.",
-        },
-        composition: [[{ fr: "Matériau", en: "Material" }, null]],
-      },
     ],
   },
   {
     slug: "juice",
     detailsType: "composition",
-    image: "/images/juice-orange.png",
+    image: "/images/juice-fruit-cocktail.png",
     title: { fr: "Jus", en: "Juice range" },
-    tagline: { fr: "De 250 ml à 5 L", en: "From 250 ml to 5 L" },
+    tagline: { fr: "De 250 ml à 500 ml", en: "From 250 ml to 500 ml" },
     description: {
-      fr: "Notre gamme de jus STREAMZ, préparée à base d’eau purifiée, est disponible en différents formats (de 250 ml à 5 L).",
-      en: "Our STREAMZ juice range made of purified water, available in various pack sizes (from 250 ml to 5 L).",
+      fr: "Notre gamme de jus STREAMZ, préparée à base d’eau purifiée, est disponible en différents formats (de 250 ml à 500 ml).",
+      en: "Our STREAMZ juice range made of purified water, available in various pack sizes (from 250 ml to 500 ml).",
     },
     products: [
       {
@@ -207,7 +204,7 @@ export const categories = [
             { fr: "Eau purifiée STREAMZ", en: "STREAMZ purified water" },
           ],
           [{ fr: "Ingrédients", en: "Ingredients" }, null],
-          [{ fr: "Formats", en: "Sizes" }, "250 ml – 5 L"],
+          [{ fr: "Formats", en: "Sizes" }, "250 ml, 330 ml, 500 ml"],
         ],
       },
       {
@@ -224,7 +221,7 @@ export const categories = [
             { fr: "Eau purifiée STREAMZ", en: "STREAMZ purified water" },
           ],
           [{ fr: "Ingrédients", en: "Ingredients" }, null],
-          [{ fr: "Formats", en: "Sizes" }, "250 ml – 5 L"],
+          [{ fr: "Formats", en: "Sizes" }, "250 ml, 330 ml, 500 ml"],
         ],
       },
       {
@@ -241,7 +238,7 @@ export const categories = [
             { fr: "Eau purifiée STREAMZ", en: "STREAMZ purified water" },
           ],
           [{ fr: "Ingrédients", en: "Ingredients" }, null],
-          [{ fr: "Formats", en: "Sizes" }, "250 ml – 5 L"],
+          [{ fr: "Formats", en: "Sizes" }, "250 ml, 330 ml, 500 ml"],
         ],
       },
     ],
@@ -309,6 +306,8 @@ export const categories = [
   },
   {
     slug: "filtration",
+    // Photos non detourees : leur fond blanc est fondu dans la case.
+    blendPhotos: true,
     detailsType: "specifications",
     image: "/images/filtration-system.png",
     title: { fr: "Filtration d’eau", en: "Water filtration" },
@@ -319,21 +318,104 @@ export const categories = [
     },
     products: [
       {
-        slug: "system",
-        name: { fr: "Système de filtration", en: "Filtration system" },
-        image: "/images/filtration-system.png",
-        text: {
-          fr: "Solution de traitement de l’eau sur mesure, étudiée selon votre installation.",
-          en: "Tailored water treatment solution, designed around your installation.",
+        slug: "fluxtek-50gpd",
+        name: {
+          fr: "Osmoseur Fluxtek 50 GPD, sans pompe ni support",
+          en: "50 GPD Fluxtek RO System, non-pump, without stand",
         },
-        composition: [
-          [{ fr: "Type", en: "Type" }, null],
-          [{ fr: "Étapes de filtration", en: "Filtration stages" }, null],
-          [
-            { fr: "Installation", en: "Installation" },
-            { fr: "Par notre équipe", en: "By our team" },
-          ],
-        ],
+        image: "/images/filtration-fluxtek-50gpd.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "fluxtek-50gpd-stand",
+        name: {
+          fr: "Osmoseur Fluxtek 50 GPD, sans pompe, avec support",
+          en: "50 GPD Fluxtek RO System, non-pump, with stand",
+        },
+        image: "/images/filtration-fluxtek-50gpd-stand.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "aqua-care-75gpd",
+        name: {
+          fr: "Osmoseur Aqua Care 75 GPD, sans pompe",
+          en: "75 GPD Aqua Care RO System, without pump",
+        },
+        image: "/images/filtration-aqua-care-75gpd.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "aqua-care-75gpd-pump",
+        name: {
+          fr: "Osmoseur Aqua Care 75 GPD, avec pompe",
+          en: "75 GPD Aqua Care RO System, with pump",
+        },
+        image: "/images/filtration-aqua-care-75gpd-pump.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "american-stars-75gpd",
+        name: {
+          fr: "Osmoseur American Stars 75 GPD, sans pompe",
+          en: "75 GPD American Stars RO System, without pump",
+        },
+        image: "/images/filtration-american-stars-75gpd.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "american-stars-75gpd-pump",
+        name: {
+          fr: "Osmoseur American Stars 75 GPD, avec pompe",
+          en: "75 GPD American Stars RO System, with pump",
+        },
+        image: "/images/filtration-american-stars-75gpd-pump.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "purewater-400gpd",
+        name: {
+          fr: "Osmoseur PureWater 400 GPD (3013)",
+          en: "400 GPD PureWater RO System 3013",
+        },
+        image: "/images/filtration-purewater-400gpd.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "purewater-500gpd",
+        name: {
+          fr: "Osmoseur PureWater 500 GPD",
+          en: "500 GPD PureWater RO System",
+        },
+        image: "/images/filtration-purewater-500gpd.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "purewater-600gpd",
+        name: {
+          fr: "Osmoseur PureWater 600 GPD (3213)",
+          en: "600 GPD PureWater RO System 3213",
+        },
+        image: "/images/filtration-purewater-600gpd.webp",
+        text: filtrationText,
+        composition: [],
+      },
+      {
+        slug: "purewater-800gpd",
+        name: {
+          fr: "Osmoseur PureWater 800 GPD (3413)",
+          en: "800 GPD PureWater RO System 3413",
+        },
+        image: "/images/filtration-purewater-800gpd.webp",
+        text: filtrationText,
+        composition: [],
       },
     ],
   },

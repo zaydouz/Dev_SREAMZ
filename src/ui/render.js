@@ -99,7 +99,7 @@ const productPageMarkup = (content, language, categorySlug, productSlug) => {
   <section class="product-page section-pad">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="#products">${content.navigation.products}</a><span aria-hidden="true">/</span><a href="#/products/${category.slug}">${categoryTitle}</a></nav>
     <article class="product-sheet">
-      <div class="product-sheet-image">${productImage(product.image, name)}</div>
+      <div class="product-sheet-image">${productImage(product.image, name, category.blendPhotos && product.image ? "is-blended" : "")}</div>
       <div class="product-sheet-info">
         <p class="eyebrow">${categoryTitle}</p>
         <h1 class="section-title">${name}</h1>
@@ -112,7 +112,7 @@ const productPageMarkup = (content, language, categorySlug, productSlug) => {
             .map(
               (item) => `
             <a class="variant" href="#/products/${category.slug}/${item.slug}"${item === product ? ' aria-current="page"' : ""}>
-              <span class="variant-image">${productImage(item.image, "")}</span>
+              <span class="variant-image">${productImage(item.image, "", category.blendPhotos && item.image ? "is-blended" : "")}</span>
               <span class="variant-name">${localize(item.name, language)}</span>
             </a>`,
             )
@@ -120,7 +120,7 @@ const productPageMarkup = (content, language, categorySlug, productSlug) => {
         </div>`
             : ""
         }
-        <button class="button button-primary" type="button" data-dialog="composition-dialog">${details.button}</button>
+        ${product.composition.length ? `<button class="button button-primary" type="button" data-dialog="composition-dialog">${details.button}</button>` : ""}
       </div>
     </article>
     <dialog class="composition-dialog" id="composition-dialog" aria-labelledby="composition-title">
@@ -234,13 +234,14 @@ const storesMarkup = (content) => {
             (store, index) => `
           <li class="store-card${index === 0 ? " is-selected" : ""}" data-store-id="${store.id}" data-search="${normalize([store.name, store.address].join(" "))}">
             <button class="store-select" type="button" data-map="${mapsEmbedUrl(store)}"><h3>${store.name}</h3></button>
-            <p>${store.address}</p>
+            <p>${store.address}, ${content.country}</p>
             <ul class="store-services">${store.services.map((service) => `<li>${labels.serviceNames[service]}</li>`).join("")}</ul>
             <dl>
               <div><dt>${labels.hours}</dt><dd${store.hours ? "" : ' class="is-pending"'}>${store.hours ?? content.pending}</dd></div>
             </dl>
             <div class="store-actions">
               <a class="button button-primary" href="${mapsUrl(store)}" target="_blank" rel="noopener noreferrer">${labels.directions}</a>
+              ${store.gallery.length ? `<button class="button button-outline" type="button" data-dialog="gallery-${store.id}">${labels.gallery}</button>` : ""}
               <a class="button button-outline" href="${telHref(store.phone)}">${labels.call} ${store.phone}</a>
             </div>
           </li>`,
@@ -250,6 +251,22 @@ const storesMarkup = (content) => {
       </div>
       <div class="locator-map"><iframe title="${labels.mapTitle}" src="${mapsEmbedUrl(stores[0])}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     </div>
+    ${stores
+      .filter(({ gallery }) => gallery.length)
+      .map(
+        (store) => `
+    <dialog class="composition-dialog gallery-dialog" id="gallery-${store.id}" aria-labelledby="gallery-title-${store.id}">
+      <div class="composition-header">
+        <div>
+          <p class="eyebrow">${labels.gallery}</p>
+          <h2 id="gallery-title-${store.id}">${store.name}</h2>
+        </div>
+        <button class="composition-close" type="button" aria-label="${content.productPage.close}">&times;</button>
+      </div>
+      <div class="gallery-grid">${store.gallery.map((src, index) => `<img src="${src}" alt="${store.name} – ${index + 1}" loading="lazy" />`).join("")}</div>
+    </dialog>`,
+      )
+      .join("")}
   </section>`;
 };
 
@@ -263,7 +280,7 @@ const contactMarkup = (content) => `
     <dl class="contact-details">
       <div><dt>${content.contact.emailLabel}</dt><dd><a href="mailto:${content.contact.email}">${content.contact.email}</a></dd></div>
       <div><dt>${content.contact.phoneLabel}</dt><dd><a href="${telHref(content.contact.phone)}">${content.contact.phone}</a></dd></div>
-      <div><dt>${content.contact.addressLabel}</dt><dd>${stores[0].address}</dd></div>
+      <div><dt>${content.contact.addressLabel}</dt><dd>${stores[0].address}, ${content.country}</dd></div>
     </dl>
   </section>`;
 
@@ -274,7 +291,7 @@ const footerMarkup = (content) => `
     <div class="footer-contact">
       <a href="mailto:${content.contact.email}">${content.contact.email}</a>
       <a href="${telHref(content.contact.phone)}">${content.contact.phone}</a>
-      <span>${stores[0].address}</span>
+      <span>${stores[0].address}, ${content.country}</span>
     </div>
     <small>© ${new Date().getFullYear()} ${content.company.name} · ${content.footer.registration} ${content.company.registration} · ${content.footer.vat} ${content.company.vat} · ${content.footer.rights}</small>
   </footer>`;
@@ -323,7 +340,7 @@ const contactDialogMarkup = (content) => {
         <h3>${form.detailsTitle}</h3>
         <p><a href="mailto:${content.contact.email}">${content.contact.email}</a><br /><a href="${telHref(content.contact.phone)}">${content.contact.phone}</a></p>
         <h3>${form.locationTitle}</h3>
-        <p>${stores[0].address}</p>
+        <p>${stores[0].address}, ${content.country}</p>
       </aside>
     </div>
   </dialog>`;
